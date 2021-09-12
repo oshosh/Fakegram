@@ -8,7 +8,7 @@ function Home() {
         <>
             <Head>
                 <meta charSet="utf-8"></meta>
-                <title>FakeGram</title>
+                <title>Fakegram</title>
             </Head>
             <AppLayout>
                 hello, next !

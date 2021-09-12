@@ -1,5 +1,6 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Head from 'next/head';
+import { useRouter } from 'next/router'
 import { Button, Checkbox, Form, Input } from 'antd';
 
 import { Controller, useForm } from 'react-hook-form';
@@ -28,17 +29,65 @@ const FromWrapper = styled.div`
     justify-content: center;
     align-items: center;
     margin-bottom: 1.2rem;
+    background: #fff;
     
     padding: 34px;
     
     border: 1px solid #d2d2d2;
-    border-radius: 2px;
+    border-radius: 5px;
 
     & .form-header {
         width: 173px;
         height: 50px;
         background: url(${titleLogo}) no-repeat;
         background-size: cover;
+        margin-bottom: 0.7rem
+    }
+
+    & .header-subtitle h2 {
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 1.3;
+        margin: 0 40px 10px;
+        color: #8e8e8e;
+        text-align: center;
+    }
+
+    & .header-divider {
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+        margin: 10px 40px 18px;
+        width: 76%;
+
+        & .divider1{
+            
+            display: flex;
+            height: 1px;
+            background-color: #dbdbdb;
+            /* flex-shrink: 1;
+            flex-grow: 1; */
+            flex: 1 1 auto;
+            position: relative;
+            top: 0.45rem;
+        }
+
+        & .divider2{
+            color: #8e8e8e;
+            font-size: 13px;
+            font-weight: 600;
+            line-height: 15px;
+            margin: 0 18px;
+        }
+
+        & .divider3{
+            display: flex;
+            height: 1px;
+            background-color: #dbdbdb;
+            flex: 1 1 auto;
+            position: relative;
+            top: 0.45rem;
+        }
     }
 `
 
@@ -51,33 +100,106 @@ const CustomAntdForm = styled(Form)`
 `
 
 const GotoHome = styled.div`
+    background: #fff;
     display: flex;
     justify-content: space-around;
     padding: 34px;
     border: 1px solid #d2d2d2;
-    border-radius: 2px;
+    border-radius: 5px;
 `
 
 function signup() {
-
+    const router = useRouter()
     const { register, handleSubmit, watch, formState: { errors }, setValue, control } = useForm({
         resolver: yupResolver(signUpValidation),
         mode: 'onBlur',
     });
 
+    useEffect(() => {
+        createKakaoButton()
+    }, [])
+
+    const createKakaoButton = useCallback((e) => {
+        if (window.Kakao) {
+            const kakao = window.Kakao
+            if (!kakao.isInitialized()) {
+                kakao.init(process.env.KAKAO_SECRET_JS_KEY)
+
+                Kakao.Auth.createLoginButton({
+                    container: '#kakaoLoginBtn',
+                    success: function (response) {
+
+                        kakao.API.request({
+                            url: "/v2/user/me",
+                            success: function (response) {
+                                const { id, email, nickname } = response
+                                console.log(id);
+                                console.log(email);
+                                console.log(nickname);
+                            },
+                            fail: function (error) {
+                                console.error(error)
+                            },
+                        })
+                    },
+                    fail: function (error) {
+                        console.error(error)
+                    },
+                });
+            }
+        }
+    }, [])
+
     const onSubmitSend = useCallback((e) => {
         console.log(watch())
     }, [])
+
+    const logout = () => {
+        const kakao = window.Kakao
+        kakao.isInitialized()
+        if (!kakao.Auth.getAccessToken()) {
+            console.log('Not logged in.');
+            return;
+        }
+        kakao.Auth.logout(function () {
+            console.log(kakao.Auth.getAccessToken());
+        });
+    }
+
+
     return (
+
         <>
             <Head>
                 <title>회원가입 페이지 | Fakegram</title>
             </Head>
             <SignUpLayout>
                 <FromWrapper>
-                    <div className="form-header">
-
+                    <div className="form-header" />
+                    <div className="header-subtitle">
+                        <h2>친구들의 사진과 동영상을 보려면 가입하세요.</h2>
                     </div>
+                    {
+
+                        <button
+                            id={"kakaoLoginBtn"}
+                        >
+                            로그인
+                        </button>
+                    }
+                    <button
+                        id={"lgo"}
+                        onClick={logout}
+                    >
+                        로그아웃
+                    </button>
+
+                    <div className="header-divider">
+                        <div className="divider1"></div>
+                        <div className="divider2">또는</div>
+                        <div className="divider3"></div>
+                    </div>
+
 
                     <CustomAntdForm onFinish={handleSubmit(onSubmitSend)}>
                         <div>

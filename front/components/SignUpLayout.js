@@ -14,6 +14,7 @@ const SignUpWrapper = styled.section`
     overflow: hidden;
 
     flex: 1 1 auto;
+    background:rgb(240, 240, 240) ;
 
     & main {
         display: flex;
@@ -25,7 +26,7 @@ const SignUpWrapper = styled.section`
         & .container-wrapper {
 
             & .container-signup {
-                max-width: 450px;
+                max-width: 380px;
                 flex-grow: 1;
                 justify-content: center;
                 align-items: center;
@@ -35,10 +36,16 @@ const SignUpWrapper = styled.section`
     }
 
     & footer {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
         margin-top: auto;
         padding: 0 20px;
         padding-left: 16px;
         padding-right: 16px;
+
+        margin-bottom: 40px;
     }
 `
 
@@ -55,22 +62,7 @@ function SignUpLayout({ children }) {
                 </main>
                 <footer>
                     <div>
-                        풋터입니다.
-                    </div>
-                    <div>
-                        풋터입니다.
-                    </div>
-                    <div>
-                        풋터입니다.
-                    </div>
-                    <div>
-                        풋터입니다.
-                    </div>
-                    <div>
-                        풋터입니다.
-                    </div>
-                    <div>
-                        풋터입니다.
+                        © 2021 by OH SEHYUN. All rights reserved.
                     </div>
                 </footer>
             </SignUpWrapper>
