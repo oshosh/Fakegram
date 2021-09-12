@@ -9,6 +9,9 @@ import { ErrorMessage } from '@hookform/error-message'
 import { yupResolver } from '@hookform/resolvers/yup';
 import { signInValidation } from '../hooks/yup'
 import { LockOutlined, PoweroffOutlined, UserOutlined } from '@ant-design/icons';
+import { useDispatch } from 'react-redux';
+
+import { loginAction } from '../reducers'
 
 const LoginWrapper = styled.div`
     margin: .6rem;
@@ -31,7 +34,8 @@ const RequiredText = styled.p`
 
 //https://kimyang-sun.tistory.com/entry/React-Hook-Form-Antd-Yup-%EB%A6%AC%EC%95%A1%ED%8A%B8-%ED%9A%8C%EC%9B%90%EA%B0%80%EC%9E%85-%ED%8F%BC-%EB%A7%8C%EB%93%A4%EA%B8%B0
 
-function LoginForm({ setIsLoggedIn }) {
+function LoginForm() {
+    const dispatch = useDispatch()
 
     const { register, handleSubmit, watch, formState: { errors }, setValue, control } = useForm({
         resolver: yupResolver(signInValidation),
@@ -39,9 +43,18 @@ function LoginForm({ setIsLoggedIn }) {
     });
     const onSubmitSend = useCallback((e) => {
         console.log(watch())
-        setIsLoggedIn(true)
+        debugger
+        dispatch(loginAction({
+            id: watch().id,
+            password: watch().password,
+            isLoggedIn: true
+        }))
     }, [])
 
+    const onChangeID = () => {
+        debugger
+        // setValue("id", 'sadf@naver.com')
+    }
     return (
         <Form onFinish={handleSubmit(onSubmitSend)}>
             <LoginWrapper>
@@ -54,6 +67,7 @@ function LoginForm({ setIsLoggedIn }) {
                     defaultValue=""
                     prefix={<UserOutlined />}
                     required
+                    {...register("id")}
                 />
                 <ErrorMessage
                     errors={errors}

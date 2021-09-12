@@ -4,17 +4,20 @@ import styled from 'styled-components';
 
 import { UserOutlined } from '@ant-design/icons';
 import { Menu, Avatar, Dropdown } from 'antd';
+import { useDispatch } from 'react-redux';
 
+import { logoutAction } from '../reducers'
 
 const MenuWrapper = styled(Menu)`
     border-radius: 5px;
     width: 150px;
 `;
 
-function HeaderProFile({ setIsLoggedIn }) {
+function HeaderProFile() {
+    const dispatch = useDispatch();
 
     const onLogOut = useCallback(() => {
-        setIsLoggedIn(false)
+        dispatch(logoutAction())
     }, [])
 
     const menu = (

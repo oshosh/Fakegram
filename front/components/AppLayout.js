@@ -18,6 +18,8 @@ import HomeImg from '../images/home.png'
 import Modal from '../components/Modoal'
 import HeaderProFile from './HeaderProFile';
 
+import { useSelector } from 'react-redux'
+
 const HeaderWrapper = styled.div`
     max-width: 1100px;
     margin: 0 auto;
@@ -92,7 +94,8 @@ const HeartContent = styled.div`
 `
 
 function AppLayout({ children }) {
-    const [isLoggedIn, setIsLoggedIn] = useState(false)
+    const isLoggedIn = useSelector((state) => state.user.isLoggedIn)
+
     const [heartActive, setHeartActive] = useState(true)
     const [modalVisible, setModalVisible] = useState(false)
 
@@ -108,6 +111,7 @@ function AppLayout({ children }) {
         setHeartActive((prevState) => !prevState)
         openModal()
     }, [openModal])
+
 
     return (
         <>
@@ -192,7 +196,7 @@ function AppLayout({ children }) {
                                                 isLoggedIn
                                                     ? (<Link href="/profile" >
                                                         <a>
-                                                            <HeaderProFile setIsLoggedIn={setIsLoggedIn} />
+                                                            <HeaderProFile />
                                                         </a>
                                                     </Link>)
                                                     : <Avatar size="medium" icon={<UserOutlined />} />
@@ -209,8 +213,8 @@ function AppLayout({ children }) {
                     <Col lg={4} xs={24} md={4}>
                         {
                             isLoggedIn
-                                ? <UserProfile setIsLoggedIn={setIsLoggedIn} />
-                                : <LoginForm setIsLoggedIn={setIsLoggedIn} />
+                                ? <UserProfile />
+                                : <LoginForm />
                         }
                     </Col>
                     <Col lg={13} xs={24} md={13} >
