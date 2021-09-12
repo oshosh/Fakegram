@@ -23,6 +23,7 @@
   ```
  
  # 작업 할 내역들 및 구조
+ ```
   -AppLayout
   ㄴheader
     ㄴ SearchInput (해시 태그 검색)
@@ -39,3 +40,4 @@
   - SignUpLayout
   ㄴ 회원 가입
   ㄴ 카카오 로그인
+```
