@@ -60,9 +60,7 @@ function PostForm() {
     const Picker = dynamic(() => import("emoji-picker-react"))
     const { register, handleSubmit, watch, formState: { errors }, setValue, control } = useForm();
 
-    const onsubmit = useCallback((e) => {
-        console.log(watch())
-    }, [])
+
 
 
     const [emoji, setEmoji] = useState('')
@@ -73,6 +71,12 @@ function PostForm() {
     const onPickOpenUp = () => {
         setOpen(!open)
     }
+
+    const onsubmit = useCallback((e) => {
+        // 이모지로 ref 통해서 이전 props 값 가져와서 다시 register의 값을 갱신해줘야함..
+        setValue("text", textareaRef.current.resizableTextArea.props.value)
+        console.log(watch())
+    }, [])
 
     return (
         <>
@@ -108,6 +112,7 @@ function PostForm() {
                                     placeholder={"osh님, 무슨 생각을 하고 계신가요 ?"}
                                     onChange={e => {
                                         setTextAreaData(e.target.value)
+                                        setValue("text", e.target.value)
                                     }}
                                     value={textAreaData}
                                 >
