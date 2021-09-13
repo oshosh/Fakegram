@@ -54,7 +54,7 @@ const SignUpWrapper = styled.section`
 function SignUpLayout({ children }) {
 
     //로그인이 실제로는 정보있는걸 back에서 체크 후 되돌려야함
-    const { user, isLoggedIn } = useSelector((state) => state.user)
+    const isLoggedIn = useSelector((state) => state.user.isLoggedIn)
     const router = useRouter()
 
     useEffect(() => {

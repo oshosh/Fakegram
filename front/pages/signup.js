@@ -13,7 +13,7 @@ import SignUpLayout from '../components/SignUpLayout';
 import titleLogo from '../images/logo_text.png'
 import Link from 'next/link';
 import { useDispatch } from 'react-redux';
-import { loginAction } from '../reducers';
+import { loginAction } from '../reducers/user';
 
 const RequiredText = styled.p`
     font-size: 0.6rem;

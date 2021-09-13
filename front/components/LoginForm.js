@@ -11,7 +11,7 @@ import { signInValidation } from '../hooks/yup'
 import { LockOutlined, PoweroffOutlined, UserOutlined } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
 
-import { loginAction } from '../reducers'
+import { loginAction } from '../reducers/user'
 
 const LoginWrapper = styled.div`
     margin: .6rem;
@@ -43,11 +43,9 @@ function LoginForm() {
     });
     const onSubmitSend = useCallback((e) => {
         console.log(watch())
-        debugger
         dispatch(loginAction({
             id: watch().id,
             password: watch().password,
-            isLoggedIn: true
         }))
     }, [])
 

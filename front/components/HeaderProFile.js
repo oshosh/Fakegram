@@ -6,7 +6,7 @@ import { UserOutlined } from '@ant-design/icons';
 import { Menu, Avatar, Dropdown } from 'antd';
 import { useDispatch } from 'react-redux';
 
-import { logoutAction } from '../reducers'
+import { logoutAction } from '../reducers/user'
 
 const MenuWrapper = styled(Menu)`
     border-radius: 5px;
