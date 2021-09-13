@@ -24,6 +24,9 @@
     @hookform/resolvers
     yup
     
+    이모지 추가
+    emoji-picker-react
+    
     카카오 로그인
     kakao login API (추후 back 리다이렉션 필요)
   ```
@@ -43,7 +46,12 @@
           ㄴ 프로필 사진
           
        ㄴ 로그아웃
-  ㄴ 메인 포스트 목록
+  ㄴ 메인 포스트
+     ㄴ 포스트 작성
+        ㄴ 이모지
+        ㄴ 사진
+        ㄴ 게시물
+     ㄴ 포스트 목록
   
   - SignUpLayout
   ㄴ 회원 가입
