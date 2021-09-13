@@ -95,6 +95,7 @@ const HeartContent = styled.div`
 
 function AppLayout({ children }) {
     const isLoggedIn = useSelector((state) => state.user.isLoggedIn)
+    const data = useSelector((state) => state)
 
     const [heartActive, setHeartActive] = useState(true)
     const [modalVisible, setModalVisible] = useState(false)

@@ -12,6 +12,8 @@ import SignUpLayout from '../components/SignUpLayout';
 
 import titleLogo from '../images/logo_text.png'
 import Link from 'next/link';
+import { useDispatch } from 'react-redux';
+import { loginAction } from '../reducers';
 
 const RequiredText = styled.p`
     font-size: 0.6rem;
@@ -110,6 +112,8 @@ const GotoHome = styled.div`
 
 function signup() {
     const router = useRouter()
+    const dispatch = useDispatch()
+
     const { register, handleSubmit, watch, formState: { errors }, setValue, control } = useForm({
         resolver: yupResolver(signUpValidation),
         mode: 'onBlur',
@@ -132,10 +136,24 @@ function signup() {
                         kakao.API.request({
                             url: "/v2/user/me",
                             success: function (response) {
-                                const { id, email, nickname } = response
-                                console.log(id);
+                                let email = response.kakao_account.email
+                                let nickname = response.kakao_account.profile.nickname
+                                let password = kakao.Auth.getAccessToken()
+
                                 console.log(email);
                                 console.log(nickname);
+                                console.log(password);
+
+                                dispatch(
+                                    loginAction({
+                                        id: email,
+                                        nickname,
+                                        password,
+                                    })
+                                )
+                                router.push('/')
+                                // 추후 back 리다이렉션 작업 필요
+
                             },
                             fail: function (error) {
                                 console.error(error)
@@ -157,12 +175,21 @@ function signup() {
     const logout = () => {
         const kakao = window.Kakao
         kakao.isInitialized()
-        if (!kakao.Auth.getAccessToken()) {
-            console.log('Not logged in.');
-            return;
-        }
-        kakao.Auth.logout(function () {
-            console.log(kakao.Auth.getAccessToken());
+        // if (!kakao.Auth.getAccessToken()) {
+        //     console.log('Not logged in.');
+        //     return;
+        // }
+        // kakao.Auth.logout(function () {
+        //     console.log(kakao.Auth.getAccessToken());
+        // });
+        Kakao.API.request({
+            url: '/v1/user/unlink',
+            success: function (response) {
+                console.log(response);
+            },
+            fail: function (error) {
+                console.log(error);
+            },
         });
     }
 
@@ -191,7 +218,7 @@ function signup() {
                         id={"lgo"}
                         onClick={logout}
                     >
-                        로그아웃
+                        탈퇴하기
                     </button>
 
                     <div className="header-divider">
