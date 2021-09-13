@@ -24,6 +24,9 @@
     @hookform/resolvers
     yup
     
+    이모지 추가
+    emoji-picker-react
+    
     카카오 로그인
     kakao login API (추후 back 리다이렉션 필요)
   ```
