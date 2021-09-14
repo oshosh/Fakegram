@@ -18,11 +18,12 @@ function Home() {
             </Head>
             <AppLayout>
                 {isLoggedIn && <PostForm />}
+
                 {mainPosts.map((post, idx) => {
-                    <PostCard
+                    return (<PostCard
                         key={post.id}
                         post={post}
-                    />
+                    />)
                 })}
 
             </AppLayout>

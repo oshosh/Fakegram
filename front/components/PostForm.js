@@ -4,6 +4,9 @@ import { Avatar, Button, Form, Input } from 'antd'
 import styled from 'styled-components';
 import { PictureOutlined, SmileOutlined } from '@ant-design/icons';
 import dynamic from 'next/dynamic'
+import { useDispatch, useSelector } from 'react-redux';
+
+import { addPost } from '../reducers/post'
 
 const ContentWrapper = styled.div`
     margin-top: 20px;
@@ -71,23 +74,43 @@ const PickerContainer = styled.div`
 
 function PostForm() {
     const Picker = dynamic(() => import("emoji-picker-react")) // no ssr
-    const textareaRef = useRef()
 
-    const { register, handleSubmit, watch, formState: { errors }, setValue, control } = useForm();
+    const { register, handleSubmit, watch, setValue, control } = useForm();
+    const dispatch = useDispatch()
+
+    const textareaRef = useRef()
+    const imageInput = useRef()
 
     const [emoji, setEmoji] = useState('')
     const [open, setOpen] = useState(false)
     const [textAreaData, setTextAreaData] = useState('')
 
-    const onPickOpenUp = () => {
+    const onPickOpenUp = useCallback(() => {
         setOpen(!open)
-    }
+    }, [open])
 
-    const onsubmit = useCallback((e) => {
-        // 이모지로 ref 통해서 이전 props 값 가져와서 다시 register의 값을 갱신해줘야함..
-        setValue("text", textareaRef.current.resizableTextArea.props.value)
+    const onFormSubmit = useCallback((e) => {
+        if (Object.values(watch()).join().trim() === '') {
+            return;
+        }
+        setValue("text", textareaRef.current.resizableTextArea.props.value) // 이모지로 ref 통해서 이전 props 값 가져와서 다시 register의 값을 갱신해줘야함..
         console.log(watch())
-    }, [])
+        dispatch(addPost())
+
+        setTextAreaData('')
+        setValue("text", '')
+
+    }, [setValue, watch, setTextAreaData])
+
+    const onEmojiClickEvent = useCallback((e, emojiObject) => {
+        setEmoji(emojiObject.emoji)
+        setOpen(!open)
+        setTextAreaData((prevData) => prevData + emojiObject.emoji)
+    }, [emoji, open, textAreaData])
+
+    const onClickImageUpload = useCallback((e) => {
+        imageInput.current.click()
+    }, [imageInput.current])
 
     return (
         <>
@@ -106,7 +129,7 @@ function PostForm() {
                     <Form
                         style={{ margin: '10px 0 20px' }}
                         encType="multipart/form-data"
-                        onFinish={handleSubmit(onsubmit)}
+                        onFinish={handleSubmit(onFormSubmit)}
                     >
                         <Controller
                             type="text"
@@ -139,9 +162,10 @@ function PostForm() {
 
                                 <ContentItem>
                                     <div className="picture-content">
-                                        <input type="file" multiple hidden />
+                                        <input type="file" multiple hidden ref={imageInput} />
                                         <Button
                                             icon={<PictureOutlined />}
+                                            onClick={onClickImageUpload}
                                         >
                                             사진
                                         </Button>
@@ -154,13 +178,7 @@ function PostForm() {
                                     {
                                         open && (
                                             <PickerContainer>
-                                                <Picker onEmojiClick={(e, emojiObject) => {
-                                                    setEmoji(emojiObject.emoji)
-                                                    setOpen(!open)
-                                                    setTextAreaData((prevData) => {
-                                                        return prevData + emojiObject.emoji
-                                                    })
-                                                }} />
+                                                <Picker onEmojiClick={onEmojiClickEvent} />
                                             </PickerContainer>
                                         )
                                     }

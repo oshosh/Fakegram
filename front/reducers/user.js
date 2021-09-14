@@ -20,7 +20,7 @@ const reducer = handleActions(
             return {
                 ...state,
                 isLoggedIn: true,
-                user: action.data,
+                user: action.payload,
             }
         },
         [LOG_OUT]: (state, action) => {

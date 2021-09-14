@@ -43,10 +43,14 @@ function LoginForm() {
     });
     const onSubmitSend = useCallback((e) => {
         console.log(watch())
-        dispatch(loginAction({
-            id: watch().id,
-            password: watch().password,
-        }))
+
+        dispatch(
+            loginAction(
+                {
+                    id: watch().id,
+                    password: watch().password,
+                }
+            ))
     }, [])
 
     const onChangeID = () => {
