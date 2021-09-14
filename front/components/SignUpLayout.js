@@ -58,10 +58,10 @@ function SignUpLayout({ children }) {
     const router = useRouter()
 
     useEffect(() => {
-        if (isLoggedIn && user) {
+        if (isLoggedIn) {
             router.push('/')
         }
-    }, [])
+    }, [isLoggedIn])
     return (
         <>
             <SignUpWrapper>

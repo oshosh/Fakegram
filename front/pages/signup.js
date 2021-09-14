@@ -12,7 +12,7 @@ import SignUpLayout from '../components/SignUpLayout';
 
 import titleLogo from '../images/logo_text.png'
 import Link from 'next/link';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { loginAction } from '../reducers/user';
 
 const RequiredText = styled.p`
@@ -113,7 +113,7 @@ const GotoHome = styled.div`
 function signup() {
     const router = useRouter()
     const dispatch = useDispatch()
-
+    const isLoggedIn = useSelector((state) => state.user.isLoggedIn)
     const { register, handleSubmit, watch, formState: { errors }, setValue, control } = useForm({
         resolver: yupResolver(signUpValidation),
         mode: 'onBlur',
@@ -121,49 +121,60 @@ function signup() {
 
     useEffect(() => {
         createKakaoButton()
-    }, [])
+    }, [createKakaoButton])
 
+    useEffect(() => {
+        if (isLoggedIn) {
+            router.push('/')
+        }
+    }, [isLoggedIn])
+
+    const kakaoRequestAPI = (kakao) => {
+        Kakao.Auth.createLoginButton({
+            container: '#kakaoLoginBtn',
+            success: function (response) {
+
+                kakao.API.request({
+                    url: "/v2/user/me",
+                    success: function (response) {
+                        let email = response.kakao_account.email
+                        let nickname = response.kakao_account.profile.nickname
+                        let password = kakao.Auth.getAccessToken()
+
+                        console.log(email);
+                        console.log(nickname);
+                        console.log(password);
+
+                        dispatch(
+                            loginAction({
+                                id: email,
+                                nickname,
+                                password,
+                            })
+                        )
+                        router.push('/')
+                        // 추후 back 리다이렉션 작업 필요
+
+                    },
+                    fail: function (error) {
+                        console.error(error)
+                    },
+                })
+            },
+            fail: function (error) {
+                console.error(error)
+            },
+        });
+    }
     const createKakaoButton = useCallback((e) => {
         if (window.Kakao) {
             const kakao = window.Kakao
             if (!kakao.isInitialized()) {
                 kakao.init(process.env.KAKAO_SECRET_JS_KEY)
 
-                Kakao.Auth.createLoginButton({
-                    container: '#kakaoLoginBtn',
-                    success: function (response) {
-
-                        kakao.API.request({
-                            url: "/v2/user/me",
-                            success: function (response) {
-                                let email = response.kakao_account.email
-                                let nickname = response.kakao_account.profile.nickname
-                                let password = kakao.Auth.getAccessToken()
-
-                                console.log(email);
-                                console.log(nickname);
-                                console.log(password);
-
-                                dispatch(
-                                    loginAction({
-                                        id: email,
-                                        nickname,
-                                        password,
-                                    })
-                                )
-                                router.push('/')
-                                // 추후 back 리다이렉션 작업 필요
-
-                            },
-                            fail: function (error) {
-                                console.error(error)
-                            },
-                        })
-                    },
-                    fail: function (error) {
-                        console.error(error)
-                    },
-                });
+                kakaoRequestAPI(kakao)
+            } else {
+                kakaoRequestAPI(kakao)
             }
         }
     }, [])

@@ -4,7 +4,6 @@ import { Avatar, Button, Form, Input } from 'antd'
 import styled from 'styled-components';
 import { PictureOutlined, SmileOutlined } from '@ant-design/icons';
 import dynamic from 'next/dynamic'
-import useInput from '../hooks/useInput'
 
 const ContentWrapper = styled.div`
     margin-top: 20px;
@@ -29,7 +28,6 @@ const ContentWrapper = styled.div`
         
      }
     }
-    
 `
 
 const ContentAddWrapper = styled.div`
@@ -55,18 +53,31 @@ const ContentAddWrapper = styled.div`
         margin: 1rem;
     }
 `
-// no ssr
+const ContentItem = styled.div`
+    display: flex;
+
+    & .picture-content{
+        margin-right: 10px;
+    }
+`
+
+const PickerContainer = styled.div`
+    position: absolute;
+    z-index: 3;
+    top: 200px;
+    right: 100px;
+`
+
+
 function PostForm() {
-    const Picker = dynamic(() => import("emoji-picker-react"))
+    const Picker = dynamic(() => import("emoji-picker-react")) // no ssr
+    const textareaRef = useRef()
+
     const { register, handleSubmit, watch, formState: { errors }, setValue, control } = useForm();
-
-
-
 
     const [emoji, setEmoji] = useState('')
     const [open, setOpen] = useState(false)
     const [textAreaData, setTextAreaData] = useState('')
-    const textareaRef = useRef()
 
     const onPickOpenUp = () => {
         setOpen(!open)
@@ -121,14 +132,10 @@ function PostForm() {
                             {...register("text")}
                         />
                         <ContentAddWrapper className="test">
-
-
                             <div className="content-item">
-
                                 <div>
                                     <span>게시물에 추가</span>
                                 </div>
-
 
                                 <ContentItem>
                                     <div className="picture-content">
@@ -180,17 +187,3 @@ function PostForm() {
 
 export default PostForm;
 
-const ContentItem = styled.div`
-    display: flex;
-
-    & .picture-content{
-        margin-right: 10px;
-    }
-`
-
-const PickerContainer = styled.div`
-    position: absolute;
-    z-index: 3;
-    top: 200px;
-    right: 100px;
-`
