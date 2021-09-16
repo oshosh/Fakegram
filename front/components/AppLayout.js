@@ -8,15 +8,15 @@ import { Input, Menu, Row, Col, Dropdown, Avatar } from 'antd';
 import { ThemeProvider } from 'styled-components';
 import styled, { createGlobalStyle } from 'styled-components';
 
-import UserProfile from '../components/UserProfile';
-import LoginForm from '../components/LoginForm';
+import UserProfile from './login/UserProfile';
+import LoginForm from './login/LoginForm';
 
 import theme from '../theme/theme';
 import titleLogo from '../images/logo_text.png'
 
 import HomeImg from '../images/home.png'
-import Modal from '../components/Modoal'
-import HeaderProFile from './HeaderProFile';
+import Modal from './common/Modoal'
+import HeaderProFile from './header/HeaderProFile';
 
 import { useSelector } from 'react-redux'
 

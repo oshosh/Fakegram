@@ -1,6 +1,6 @@
 import { ReadOutlined, UserAddOutlined } from '@ant-design/icons';
 import { Tabs } from 'antd';
-import FollowList from '../components/FollowList'
+import FollowList from './FollowList'
 const { TabPane } = Tabs;
 
 const TabList = ({ followerList, followingList }) => (

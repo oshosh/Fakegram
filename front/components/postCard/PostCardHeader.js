@@ -3,8 +3,8 @@ import { Avatar, Button, Popover } from 'antd';
 import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import Portal from './Portal'
-import Modoal from './Modoal'
+import Portal from '../common/Portal'
+import Modoal from '../common/Modoal'
 import PostCardMoreModal from './PostCardMoreModal'
 
 const Header = styled.header`

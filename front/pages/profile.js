@@ -1,8 +1,8 @@
 import React from 'react';
 import AppLayout from '../components/AppLayout';
 import Head from 'next/head';
-import NicknameEditForm from '../components/NicknameEditForm';
-import TabMenu from '../components/TabMenu';
+import NicknameEditForm from '../components/profile/NicknameEditForm';
+import TabMenu from '../components/profile/TabMenu';
 
 
 function profile() {

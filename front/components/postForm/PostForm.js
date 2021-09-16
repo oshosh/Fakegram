@@ -6,7 +6,7 @@ import { PictureOutlined, SmileOutlined } from '@ant-design/icons';
 import dynamic from 'next/dynamic'
 import { useDispatch, useSelector } from 'react-redux';
 
-import { addPost } from '../reducers/post'
+import { addPost } from '../../reducers/post'
 
 const ContentWrapper = styled.div`
     margin-top: 20px;
