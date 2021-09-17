@@ -10,6 +10,7 @@ import PostImages from './PostImages'
 import PostCardBody from './PostCardBody';
 import CommentForm from './CommentForm'
 import { division } from '../../util/dataUtil';
+import CustomAvatar from '../common/CustomAvatar';
 
 const PostCardWrapper = styled.div`
     margin-top: 20px;
@@ -17,6 +18,31 @@ const PostCardWrapper = styled.div`
     border-radius: 5px;
 `
 
+const ListHeaderWrapper = styled.div`
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+
+    & span {
+        color: #262626;
+        font-weight: 600;
+        margin-right: 10px;
+    }
+
+    & button {
+        border: none ;
+        background-color: #fff;
+        cursor: pointer;
+    }
+`
+
+const CommentFormWrapper = styled.div`
+    border-top: 1px solid #dbdbdb;
+    padding: 0 16px ;
+    display: inline-block;
+    width: 100%;
+    position: relative;
+`
 function PostCard({ post }) {
 
     const isLoggedIn = useSelector((state) => state.user.isLoggedIn)
@@ -66,30 +92,35 @@ function PostCard({ post }) {
             </Card>
             <PostCardBody setCommentFormOpened={setCommentFormOpened} />
             {
-                commentFormOpened &&
-                (
-                    <>
-                        <CommentForm />
-                        <List
-                            header={
-                                <>
-                                    총 {post.Comments.length}개의 댓글
-                                    {isAddBtn ? <button onClick={handleMoreComment}>더보기</button> : null}
-                                </>
-                            }
-                            itemLayout='horizontal'
-                        >
-                            {
-                                <li>
+                <>
+                    {commentFormOpened && (
+                        <>
 
+                            <List
+                                header={
+                                    <>
+                                        <ListHeaderWrapper>
+                                            <span>
+                                                총 {post.Comments.length}개의 댓글
+                                            </span>
+                                            {isAddBtn ? <button onClick={handleMoreComment}>더보기</button> : null}
+                                        </ListHeaderWrapper>
+                                    </>
+                                }
+                                itemLayout='horizontal'
+                            >
+                                <li>
                                     {
                                         prevData && prevData.length > 0 &&
-
                                         prevData.map((item, idx) => {
                                             return (
                                                 <>
                                                     <Comment
                                                         key={idx + 1}
+                                                        avatar={<CustomAvatar
+                                                            size={"medium"}
+                                                            textContent={"OH"}
+                                                        ></CustomAvatar>}
                                                         author={item.User.nickname}
                                                         content={item.content}
                                                     />
@@ -99,10 +130,14 @@ function PostCard({ post }) {
                                         })
                                     }
                                 </li>
-                            }
-                        </List>
-                    </>
-                )
+                            </List>
+                        </>
+                    )}
+                    <CommentFormWrapper>
+                        <CommentForm post={post} />
+                    </CommentFormWrapper>
+                </>
+
             }
         </PostCardWrapper>
     );

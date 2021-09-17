@@ -87,7 +87,7 @@ function PostForm() {
     }, [open])
 
     const onFormSubmit = useCallback((e) => {
-        if (Object.values(watch()).join().trim() === '') {
+        if (Object.values(watch()).join().trim() === '' && textareaRef.current.resizableTextArea.props.value === '') {
             return;
         }
         setValue("text", textareaRef.current.resizableTextArea.props.value) // 이모지로 ref 통해서 이전 props 값 가져와서 다시 register의 값을 갱신해줘야함..
