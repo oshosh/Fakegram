@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import { Controller, useForm } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message'
 import { yupResolver } from '@hookform/resolvers/yup';
-import { signInValidation } from '../../hooks/yup'
+import { signInValidation } from '../../util/yup'
 import { LockOutlined, PoweroffOutlined, UserOutlined } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
 
@@ -54,7 +54,6 @@ function LoginForm() {
     }, [])
 
     const onChangeID = () => {
-        debugger
         // setValue("id", 'sadf@naver.com')
     }
     return (

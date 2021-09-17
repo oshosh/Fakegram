@@ -6,7 +6,7 @@ import { Button, Checkbox, Form, Input } from 'antd';
 import { Controller, useForm } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message'
 import { yupResolver } from '@hookform/resolvers/yup';
-import { signUpValidation } from '../hooks/yup'
+import { signUpValidation } from '../util/yup'
 import styled from 'styled-components';
 import SignUpLayout from '../components/SignUpLayout';
 

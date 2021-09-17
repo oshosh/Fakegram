@@ -1,49 +1,75 @@
 import React from 'react';
 import { Menu } from 'antd';
 import styled from 'styled-components';
+import CancleButton from '../common/CancleButton';
+import { useSelector } from 'react-redux';
 
 const MenuWrapper = styled(Menu)`
     border-radius: 5px;
     width: 100%;
     border-right-color:#fff;
+
+    text-align: center;
 `;
 
-const CancleButton = styled.button`
-    border: none;
-    background-color: #fff;
-    cursor: pointer;
-    width: 100%;
-    font-weight: 700;
-    text-align: center;
-`
 
-function PostCardMoreModal({ onClose }) {
+function PostCardMoreModal({ onClose, post }) {
 
-    const close = (e) => {
-        if (onClose) {
-            onClose(e)
-        }
-    }
+    // 내가 로그인하면 삭제/수정 그게 아니라면 신고
+    const id = useSelector((state) => state.user.me?.id)
+
+    const menuItem = (
+        <>
+            {
+                id && post.User.id === id ?
+                    <>
+                        <Menu.Item danger>
+                            <CancleButton
+                                onClose={onClose}
+                                textContent={"삭제"}
+                            />
+                        </Menu.Item>
+
+                        <Menu.Divider />
+                        <Menu.Item>
+                            <CancleButton
+                                onClose={onClose}
+                                textContent={"수정"}
+                            />
+                        </Menu.Item>
+                        <Menu.Divider />
+                        <Menu.Item>
+                            <CancleButton
+                                onClose={onClose}
+                                textContent={"팔로우"}
+                            />
+                        </Menu.Item>
+                    </>
+                    :
+                    (
+                        <Menu.Item danger>
+                            <CancleButton
+                                onClose={onClose}
+                                textContent={"신고"}
+                            />
+                        </Menu.Item>
+
+                    )
+            }
+        </>
+    )
+
 
     return (
         <>
             <MenuWrapper>
-                <Menu.Item danger>
-                    <CancleButton onClick={close} >
-                        신고
-                    </CancleButton>
-                </Menu.Item>
+                {menuItem}
                 <Menu.Divider />
                 <Menu.Item>
-                    <CancleButton onClick={close} >
-                        팔로우
-                    </CancleButton>
-                </Menu.Item>
-                <Menu.Divider />
-                <Menu.Item>
-                    <CancleButton onClick={close} >
-                        취소
-                    </CancleButton>
+                    <CancleButton
+                        onClose={onClose}
+                        textContent={"취소"}
+                    />
                 </Menu.Item>
             </MenuWrapper>
         </>

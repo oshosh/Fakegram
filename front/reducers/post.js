@@ -18,15 +18,78 @@ export const initialState = {
             }],
             Comments: [{
                 User: {
-                    nickname: 'hso2',
+                    nickname: '1',
                 },
                 content: '첫 댓글입니다 ㅋ',
             }, {
                 User: {
-                    nickname: 'hso',
+                    nickname: '2',
                 },
                 content: '하염ㅋ',
-            }]
+            },
+            {
+                User: {
+                    nickname: '3',
+                },
+                content: '하염ㅋ',
+            }, {
+                User: {
+                    nickname: '4',
+                },
+                content: '하염ㅋ',
+            },
+                // {
+                //     User: {
+                //         nickname: '5',
+                //     },
+                //     content: '하염ㅋ',
+                // }, {
+                //     User: {
+                //         nickname: '6',
+                //     },
+                //     content: '하염ㅋ',
+                // }, {
+                //     User: {
+                //         nickname: '7',
+                //     },
+                //     content: '하염ㅋ',
+                // }, {
+                //     User: {
+                //         nickname: '8',
+                //     },
+                //     content: '하염ㅋ',
+                // }, {
+                //     User: {
+                //         nickname: '9',
+                //     },
+                //     content: '하염ㅋ',
+                // }, {
+                //     User: {
+                //         nickname: 'hso',
+                //     },
+                //     content: '하염ㅋ',
+                // }, {
+                //     User: {
+                //         nickname: 'hso',
+                //     },
+                //     content: '하염ㅋ',
+                // }, {
+                //     User: {
+                //         nickname: 'hso',
+                //     },
+                //     content: '하염ㅋ',
+                // }, {
+                //     User: {
+                //         nickname: 'hso',
+                //     },
+                //     content: '하염ㅋ',
+                // }, {
+                //     User: {
+                //         nickname: 'hso',
+                //     },
+                //     content: '하염ㅋ',
+                // }
+            ]
         },
     ],
     imagePaths: [],

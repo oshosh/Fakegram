@@ -1,11 +1,13 @@
 import { EllipsisOutlined } from '@ant-design/icons';
-import { Avatar, Button, Popover } from 'antd';
+import { Button, Popover } from 'antd';
 import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import Portal from '../common/Portal'
 import Modoal from '../common/Modoal'
 import PostCardMoreModal from './PostCardMoreModal'
+
+import CustomAvatar from '../common/CustomAvatar'
 
 const Header = styled.header`
     display: flex;
@@ -26,7 +28,7 @@ const MoreButton = styled(Button)`
    border: none ;
 `
 
-function PostCardHeader() {
+function PostCardHeader({ post }) {
     const [modalVisible, setModalVisible] = useState(false)
 
     const openModal = useCallback((e) => setModalVisible(true), [])
@@ -40,13 +42,12 @@ function PostCardHeader() {
         <>
             <Header>
                 <div className="header-container">
-                    <Avatar
+                    <CustomAvatar
                         className="my-avatar"
-                        size="medium"
-                    >
-                        OSH
-                    </Avatar>
-                    <span>OSH</span>
+                        size={"medium"}
+                        textContent={post.User.nickname}
+                    />
+                    <span>{post.User.nickname}</span>
                 </div>
                 <div className="more-btn">
                     <MoreButton
@@ -67,6 +68,7 @@ function PostCardHeader() {
                             maskClosable={true}
                             onClose={closeModal}>
                             <PostCardMoreModal
+                                post={post}
                                 onClose={closeModal}
                             />
                         </Modoal>

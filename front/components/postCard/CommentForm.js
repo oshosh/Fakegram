@@ -1,11 +1,11 @@
 import React from 'react';
 
-function PostImages() {
+function CommentForm() {
     return (
         <div>
-            123
+
         </div>
     );
 }
 
-export default PostImages;
+export default CommentForm;

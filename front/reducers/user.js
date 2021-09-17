@@ -2,7 +2,7 @@ import { createAction, handleActions } from 'redux-actions';
 
 export const initialState = {
     isLoggedIn: false,
-    user: null,
+    me: null,
     signUpData: {},
     loginData: {}
 }
@@ -20,14 +20,14 @@ const reducer = handleActions(
             return {
                 ...state,
                 isLoggedIn: true,
-                user: action.payload,
+                me: action.payload,
             }
         },
         [LOG_OUT]: (state, action) => {
             return {
                 ...state,
                 isLoggedIn: false,
-                user: null,
+                me: null,
             }
         },
     },

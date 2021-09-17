@@ -39,12 +39,9 @@ const ContentAddWrapper = styled.div`
     & .content-item{
         display: flex;
         align-items: center;
-        justify-content: space-between;
+        justify-content: flex-end;
         
-        border: 1px solid  #d2d2d2;
         border-radius: 5px;
-
-        padding: 8px;
         margin: 0 16px ;
         
         & span {
@@ -156,10 +153,6 @@ function PostForm() {
                         />
                         <ContentAddWrapper className="test">
                             <div className="content-item">
-                                <div>
-                                    <span>게시물에 추가</span>
-                                </div>
-
                                 <ContentItem>
                                     <div className="picture-content">
                                         <input type="file" multiple hidden ref={imageInput} />

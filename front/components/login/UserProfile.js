@@ -2,11 +2,11 @@ import { Avatar, Button, Card } from 'antd';
 import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { logoutAction } from '../../reducers/user';
+import CustomAvatar from '../common/CustomAvatar';
 
 function UserProfile() {
     const dispatch = useDispatch()
     const onLogOut = useCallback(() => {
-        // setIsLoggedIn(false)
         dispatch(logoutAction())
     }, [])
 
@@ -19,7 +19,12 @@ function UserProfile() {
             ]}
         >
             <Card.Meta
-                avatar={<Avatar>OH</Avatar>}
+                avatar={
+                    <CustomAvatar
+                        size={"medium"}
+                        textContent={"OH"}
+                    />
+                }
                 title="OSH"
             ></Card.Meta>
             <Button onClick={onLogOut}>로그아웃</Button>

@@ -19,6 +19,7 @@ import Modal from './common/Modoal'
 import HeaderProFile from './header/HeaderProFile';
 
 import { useSelector } from 'react-redux'
+import CustomAvatar from './common/CustomAvatar';
 
 const HeaderWrapper = styled.div`
     max-width: 1100px;
@@ -201,7 +202,10 @@ function AppLayout({ children }) {
                                                             <HeaderProFile />
                                                         </a>
                                                     </Link>)
-                                                    : <Avatar size="medium" icon={<UserOutlined />} />
+                                                    : <CustomAvatar
+                                                        size={"medium"}
+                                                        icon={<UserOutlined />}
+                                                    />
                                             }
                                         </li>
                                     </NavBar>
@@ -212,14 +216,14 @@ function AppLayout({ children }) {
                 </header>
 
                 <Row gutter={8}>
-                    <Col lg={4} xs={24} md={4}>
+                    <Col lg={5} xs={24} md={5}>
                         {
                             isLoggedIn
                                 ? <UserProfile />
                                 : <LoginForm />
                         }
                     </Col>
-                    <Col lg={13} xs={24} md={13} >
+                    <Col lg={12} xs={24} md={12} >
                         {children}
                     </Col>
                     <Col lg={7} xs={24} md={7}>
