@@ -24,6 +24,9 @@
     @hookform/resolvers
     yup
     
+    이미지 슬라이더
+    react-slick
+    
     이모지 추가
     emoji-picker-react
     
@@ -50,10 +53,13 @@
      ㄴ 포스트 기능
         ㄴ 댓글 
            ㄴ 더보기 구현 (수정, 삭제, 게시물 등록시에만 댓글 수정 삭제에 따른 댓글 상태 변화 -facebook도 같은 형식 확인)
+           ㄴ 이모지
      ㄴ 포스트 작성
         ㄴ 이모지
         ㄴ 사진
+           ㄴ 슬라이더, slick-dots
         ㄴ 게시물
+           ㄴ 더보기 구현 예정
      ㄴ 포스트 목록
   
   - SignUpLayout
