@@ -103,7 +103,9 @@ const dummyPost = {
         id: 1,
         nickname: 'osh',
     },
-    Images: [],
+    Images: [{
+        src: 'https://bookthumb-phinf.pstatic.net/cover/137/995/13799585.jpg?udate=20180726',
+    },],
     Comments: [],
 };
 

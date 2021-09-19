@@ -95,6 +95,7 @@ const HeartContent = styled.div`
 `
 
 function AppLayout({ children }) {
+
     const isLoggedIn = useSelector((state) => state.user.isLoggedIn)
     // const isLoggedIn = true
     const data = useSelector((state) => state)
@@ -114,6 +115,7 @@ function AppLayout({ children }) {
         setHeartActive((prevState) => !prevState)
         openModal()
     }, [openModal])
+
 
 
     return (
@@ -216,17 +218,18 @@ function AppLayout({ children }) {
                 </header>
 
                 <Row gutter={8}>
-                    <Col lg={5} xs={24} md={5}>
+                    <Col xxl={4} xl={4} lg={5} xs={24} md={24}>
                         {
                             isLoggedIn
                                 ? <UserProfile />
                                 : <LoginForm />
                         }
                     </Col>
-                    <Col lg={12} xs={24} md={12} >
+                    <Col xxl={4} xl={3} />
+                    <Col xxl={8} xl={11} lg={13} xs={24} md={24} >
                         {children}
                     </Col>
-                    <Col lg={7} xs={24} md={7}>
+                    <Col xxl={6} xl={6} lg={6} xs={24} md={24}>
                         오른쪽
                     </Col>
                 </Row>
@@ -242,6 +245,12 @@ AppLayout.propTypes = {
 export default AppLayout;
 
 const Global = createGlobalStyle`
+    body {
+        background: #fafafa;
+    }
+    header {
+        background: #fff;
+    }
     .ant-row {
         margin-right: 0 !important;
         margin-left: 0 !important;

@@ -16,6 +16,12 @@ const PostCardWrapper = styled.div`
     margin-top: 20px;
     border: 1px solid  #d2d2d2;
     border-radius: 5px;
+    background: #fff;
+    /* width: 614px;
+
+    @media screen and (max-width: "994px") {
+        width: auto;
+    } */
 `
 
 const ListHeaderWrapper = styled.div`
