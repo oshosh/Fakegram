@@ -50,17 +50,35 @@
           
        ㄴ 로그아웃
   ㄴ 메인 포스트
-     ㄴ 포스트 기능
-        ㄴ 댓글 
-           ㄴ 더보기 구현 (수정, 삭제, 게시물 등록시에만 댓글 수정 삭제에 따른 댓글 상태 변화 -facebook도 같은 형식 확인)
-           ㄴ 이모지
-     ㄴ 포스트 작성
+     ㄴ 포스트 카드 (PostCard)
+        ㄴ더보기 (PostCardHeader, PostCardMoreModal) - react-portal
+          ㄴ 신고 (공용)
+          ㄴ 취소 (공용)
+          ㄴ 수정 (나 일경우)
+          ㄴ 삭제 (나 일경우)
+        ㄴ이미지 게시물 (PostImages, PostSlick)
+          ㄴ 이미지 슬라이드 구현
+        ㄴ게시물 내용 (PostCardContent)
+          ㄴ 게시물 내용 더보기 구현
+          ㄴ 해시태그 regex / link 구성
+        ㄴ포스트 카드 아이템 (PostCardBody)
+          ㄴ 좋아요
+          ㄴ 댓글 보기 
+             ㄴ 더보기 구현 (수정, 삭제, 게시물 등록시에만 댓글 수정 삭제에 따른 댓글 상태 변화 -facebook도 같은 형식 확인)
+             ㄴ 댓글 갯수
+          ㄴ 리트윗
+          ㄴ 게시물 저장
+        ㄴ댓글 달기 (CommentForm)
+          ㄴ 이모지 기능 추가
+     ㄴ 포스트 작성 (PostForm)
         ㄴ 이모지
         ㄴ 사진
            ㄴ 슬라이더, slick-dots
         ㄴ 게시물
-           ㄴ 더보기 구현 예정
-     ㄴ 포스트 목록
+           ㄴ 더보기 (PostCardContent)
+              ㄴ br 파싱 (regex)
+              ㄴ 더 보기 버튼 생성 (br태그가 하나 이상일 경우)
+     ㄴ 포스트 목록 (무한 스크롤링 구현 예정)
   
   - SignUpLayout
   ㄴ 회원 가입
