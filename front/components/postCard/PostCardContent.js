@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types'
 import Link from 'next/link';
 import styled, { css } from 'styled-components';
-
+import { regexpParse } from '../../util/dataUtil'
 
 const PostContentWrapper = styled.div`
     display: flex;
@@ -40,26 +40,22 @@ const MoreButton = styled.button`
     cursor: pointer;
 `
 
+//https://deeplify.dev/front-end/markup/text-ellipsis
 function PostCardContent({ postData }) {
     const pRef = useRef()
 
     useEffect(() => {
-        const reg = /\n/gi
-        let tempData = []
+        const tempData = []
 
         tempData.push(pRef.current.innerHTML) // 이전 데이터 넣음
-
-        pRef.current.innerHTML = pRef.current.innerHTML.replace(reg, '<br />') // br로 치환
+        pRef.current.innerHTML = regexpParse(pRef.current.innerHTML).replaceBlank()
         tempData.push(pRef.current.innerHTML)
 
         // 비교
-        if (tempData[0] === tempData[1]) {
-            console.log('같음')
-            setCreateMoreBtn(false)
-        } else {
-            console.log('다름')
+        if (tempData[0] !== tempData[1]) {
             setCreateMoreBtn(true)
         }
+
     }, [])
 
     const [createMoreBtn, setCreateMoreBtn] = useState(false)
@@ -81,13 +77,11 @@ function PostCardContent({ postData }) {
 
     return (
         <>
-            <PostContentWrapper
-
-            >
+            <PostContentWrapper>
                 <PostContentContainer className="container" cssSettings={cssSettings}>
                     <p ref={pRef}>
-                        {postData.split(/(#[^\s#]+)/g).map((contentItem, idx) => {
-                            if (contentItem.match(/(#[^\s#]+)/)) {
+                        {regexpParse(postData).hashTagSplit().map((contentItem, idx) => {
+                            if (regexpParse(contentItem).hashTagMatch()) {
                                 return (
                                     <Link href={`/hashtag/${contentItem.slice(1)}`}
                                         key={idx}
@@ -96,7 +90,6 @@ function PostCardContent({ postData }) {
                                     </Link>
                                 )
                             }
-
                             return contentItem;
                         })}
                     </p>
@@ -106,8 +99,6 @@ function PostCardContent({ postData }) {
                     {createMoreBtn && <MoreButton onClick={handleMoreClick} >더보기...</MoreButton>}
                 </ButtonWrapper>
             </PostContentWrapper>
-
-
         </>
     );
 }

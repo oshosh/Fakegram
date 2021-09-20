@@ -9,3 +9,23 @@ export const division = (n, data) => {
 
     return tmp;
 }
+
+export function regexpParse(str) {
+    if (!new.target) {
+        return new regexpParse(str)
+    }
+    this.str = str
+
+    regexpParse.prototype.hashTagSplit = () => {
+        return this.str.split(/(#[^\s#]+)/g)
+    }
+
+    regexpParse.prototype.hashTagMatch = () => {
+        return this.str.match(/(#[^\s#]+)/)
+    }
+
+    regexpParse.prototype.replaceBlank = () => {
+        const reg = /\n/gi
+        return this.str.replace(reg, '<br />')
+    }
+}
