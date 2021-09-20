@@ -12,6 +12,8 @@ import CommentForm from './CommentForm'
 import { division } from '../../util/dataUtil';
 import CustomAvatar from '../common/CustomAvatar';
 
+import PostCardContent from './PostCardContent';
+
 const PostCardWrapper = styled.div`
     margin-top: 20px;
     border: 1px solid  #d2d2d2;
@@ -93,7 +95,7 @@ function PostCard({ post }) {
             >
                 <Card.Meta
                     title={post.User.nickname}
-                    description={post.content}
+                    description={<PostCardContent postData={post.content} />}
                 />
             </Card>
             <PostCardBody setCommentFormOpened={setCommentFormOpened} />
@@ -122,7 +124,7 @@ function PostCard({ post }) {
                                             return (
                                                 <>
                                                     <Comment
-                                                        key={idx + 1}
+                                                        key={idx + 1} // 추후 id 별 수정
                                                         avatar={<CustomAvatar
                                                             size={"medium"}
                                                             textContent={"OH"}

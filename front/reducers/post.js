@@ -8,9 +8,10 @@ export const initialState = {
                 id: 1,
                 nickname: 'osh',
             },
-            content: '첫 번째 게시글',
+            content: '첫 번째 게시글 ##해쉬태그 테스트 굿\n첫 번째 게시글 ##해쉬태그 테스트 굿\n첫 번째 게시글 ##해쉬태그 테스트 굿\n첫 번째 게시글 ##해쉬태그 테스트 굿',
+            // content: 'hiasdkjf sadfjka;sdja asd;fjkla;sldkfffff',
             Images: [{
-                src: 'https://bookthumb-phinf.pstatic.net/cover/137/995/13799585.jpg?udate=20180726',
+                src: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/152229/slider-img-1.jpg',
             }, {
                 src: 'https://gimg.gilbut.co.kr/book/BN001958/rn_view_BN001958.jpg',
             }, {

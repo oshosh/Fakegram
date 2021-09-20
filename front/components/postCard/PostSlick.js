@@ -51,12 +51,27 @@ const SlickWrapper = styled.div`
 
 const SlickSlide = styled.img`
     margin: 0 auto;
+    max-width: 100%;
     max-height: 750px;
 `
 
+const NextArrow = styled.button`
+    position: relative;
+    /* top: -320px; */
+    float: right;
 
+    background: transparent;
+    width: 0;
+    height: 0;
+    border-right: 0 solid transparent;
+    border-left: 15px solid #113463;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
 
-function PostSlick({ src }) {
+    cursor: pointer;
+`
+
+function PostSlick({ src, handleImageMove }) {
 
     const settings = {
         dots: true,
@@ -67,6 +82,9 @@ function PostSlick({ src }) {
         arrows: true,
     };
 
+    // const handleClick = (text) => (e) => {
+    //     handleImageMove(text)(e)
+    // }
     return (
         <>
             <Global />
@@ -78,12 +96,15 @@ function PostSlick({ src }) {
                             return (
                                 <div>
                                     <SlickSlide src={data} />
+
                                 </div>
                             )
                         })
                     }
                 </Slider>
+                {/* <NextArrow onClick={handleClick('next')} /> */}
             </SlickWrapper>
+
         </>
     );
 }

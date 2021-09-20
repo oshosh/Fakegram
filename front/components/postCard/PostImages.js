@@ -4,9 +4,9 @@ import styled from 'styled-components';
 import PostSlick from './PostSlick';
 
 const PrevArrow = styled.button`
-    position: absolute;
-    top: 380px;
-
+    position: relative;
+    /* top: 320px; */
+    top: 150px;
     background: transparent;
     margin-right: 10px;
     width: 0;
@@ -18,21 +18,7 @@ const PrevArrow = styled.button`
     cursor: pointer;
     z-index: 1;
 `
-const NextArrow = styled.button`
-    position: absolute;
-    top: 380px;
-    left: 535px;
 
-    background: transparent;
-    width: 0;
-    height: 0;
-    border-right: 0 solid transparent;
-    border-left: 15px solid #113463;
-    border-top: 10px solid transparent;
-    border-bottom: 10px solid transparent;
-
-    cursor: pointer;
-`
 function PostImages({ images }) {
 
     useEffect(() => {
@@ -42,16 +28,8 @@ function PostImages({ images }) {
         })
     }, [])
 
-    const [showImagesZoom, setShowImagesZoom] = useState(false)
-
-    const onZoom = useCallback(() => {
-        setShowImagesZoom(true)
-        console.log('show')
-    }, [])
-
     const handleImageMove = (text) => (e) => {
         const slide = document.querySelectorAll('.slick-arrow');
-
         switch (text) {
             case 'next':
                 slide[1].click()
@@ -63,11 +41,9 @@ function PostImages({ images }) {
     }
 
     return (
-        <div>
-            <PrevArrow onClick={handleImageMove('prev')} />
-            <PostSlick src={images[0].src} />
-            <NextArrow onClick={handleImageMove('next')} />
-        </div>
+        <>
+            <PostSlick className='center' src={images[0].src} handleImageMove={handleImageMove} />
+        </>
     );
 }
 PostImages.propTypes = {
