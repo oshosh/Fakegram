@@ -9,9 +9,9 @@ import { ErrorMessage } from '@hookform/error-message'
 import { yupResolver } from '@hookform/resolvers/yup';
 import { signInValidation } from '../../util/yup'
 import { LockOutlined, PoweroffOutlined, UserOutlined } from '@ant-design/icons';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { loginAction } from '../../reducers/user'
+import { loginRequestAction } from '../../reducers/user'
 
 const LoginWrapper = styled.div`
     margin: .6rem;
@@ -36,7 +36,7 @@ const RequiredText = styled.p`
 
 function LoginForm() {
     const dispatch = useDispatch()
-
+    const { isLoggingIn } = useSelector((state) => state.user)
     const { register, handleSubmit, watch, formState: { errors }, setValue, control } = useForm({
         resolver: yupResolver(signInValidation),
         mode: 'onBlur',
@@ -44,8 +44,15 @@ function LoginForm() {
     const onSubmitSend = useCallback((e) => {
         console.log(watch())
 
+        // dispatch({
+        //     type: LOG_IN_REQUEST,
+        //     payload: {
+        //         id: watch().id,
+        //         password: watch().password,
+        //     }
+        // })
         dispatch(
-            loginAction(
+            loginRequestAction(
                 {
                     id: watch().id,
                     password: watch().password,
@@ -105,7 +112,7 @@ function LoginForm() {
                 <Button
                     type="primary"
                     htmlType="submit"
-                    loading={false}
+                    loading={isLoggingIn}
                     icon={<PoweroffOutlined />}
                 >로그인
                 </Button>

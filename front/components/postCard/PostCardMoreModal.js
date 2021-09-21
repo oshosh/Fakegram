@@ -12,7 +12,6 @@ const MenuWrapper = styled(Menu)`
     text-align: center;
 `;
 
-
 function PostCardMoreModal({ onClose, post }) {
 
     // 내가 로그인하면 삭제/수정 그게 아니라면 신고
@@ -58,7 +57,6 @@ function PostCardMoreModal({ onClose, post }) {
             }
         </>
     )
-
 
     return (
         <>

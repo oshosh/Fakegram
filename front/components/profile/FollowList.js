@@ -40,7 +40,6 @@ function FollowList({ header, data }) {
                             <Card.Meta description={item.nickname} />
                         </Card>
                     </List.Item>
-
                 )
             }}
         >

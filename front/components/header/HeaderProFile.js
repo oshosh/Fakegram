@@ -1,12 +1,13 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import Link from 'next/link'
 import styled from 'styled-components';
 
 import { UserOutlined } from '@ant-design/icons';
 import { Menu, Avatar, Dropdown } from 'antd';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { logoutRequestAction } from '../../reducers/user';
+import { useRouter } from 'next/router';
 
-import { logoutAction } from '../../reducers/user'
 
 const MenuWrapper = styled(Menu)`
     border-radius: 5px;
@@ -15,10 +16,18 @@ const MenuWrapper = styled(Menu)`
 
 function HeaderProFile() {
     const dispatch = useDispatch();
+    const router = useRouter()
+    const { isLoggedIn } = useSelector((state) => state.user)
 
     const onLogOut = useCallback(() => {
-        dispatch(logoutAction())
+        dispatch(logoutRequestAction())
     }, [])
+
+    useEffect(() => {
+        if (isLoggedIn) {
+            router.push('/')
+        }
+    }, [isLoggedIn])
 
     const menu = (
         <MenuWrapper>
