@@ -6,7 +6,6 @@ import { UserOutlined } from '@ant-design/icons';
 import { Menu, Avatar, Dropdown } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutRequestAction } from '../../reducers/user';
-import { useRouter } from 'next/router';
 
 
 const MenuWrapper = styled(Menu)`
@@ -16,18 +15,10 @@ const MenuWrapper = styled(Menu)`
 
 function HeaderProFile() {
     const dispatch = useDispatch();
-    const router = useRouter()
-    const { isLoggedIn } = useSelector((state) => state.user)
 
     const onLogOut = useCallback(() => {
         dispatch(logoutRequestAction())
     }, [])
-
-    useEffect(() => {
-        if (isLoggedIn) {
-            router.push('/')
-        }
-    }, [isLoggedIn])
 
     const menu = (
         <MenuWrapper>

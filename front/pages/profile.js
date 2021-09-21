@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 import Router from 'next/router';
 
 
-function profile() {
+function Profile() {
     const { me } = useSelector((state) => state.user)
     const followingList = [{ nickname: 'hso11' }, { nickname: 'hso22' }, { nickname: 'hso33' }]
     const followerList = [{ nickname: 'osh1' }, { nickname: 'osh2' }, { nickname: 'osh3' }]
@@ -34,4 +34,4 @@ function profile() {
     );
 }
 
-export default profile;
+export default Profile;
