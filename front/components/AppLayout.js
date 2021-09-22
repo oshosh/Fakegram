@@ -16,7 +16,9 @@ import titleLogo from '../images/logo_text.png'
 
 import HomeImg from '../images/home.png'
 import Modal from './common/Modoal'
+
 import HeaderProFile from './header/HeaderProFile';
+import HeartContentList from './header/HeartContentList'
 
 import { useSelector } from 'react-redux'
 import CustomAvatar from './common/CustomAvatar';
@@ -106,6 +108,7 @@ function AppLayout({ children }) {
     const router = useRouter()
 
     const openModal = useCallback((e) => setModalVisible(true), [])
+
     const closeModal = useCallback((e) => {
         setHeartActive(true)
         setModalVisible(false)
@@ -157,43 +160,18 @@ function AppLayout({ children }) {
                                                     <a className="content-activity">
                                                         <div className="heart">
                                                             {
-                                                                heartActive
-                                                                    ? (
-                                                                        <HeartOutlined
-                                                                            key="heart"
-                                                                            style={{ color: '#000', fontSize: '20px' }}
-                                                                            onClick={() => onHeartClick('on')}
-                                                                        />
-                                                                    )
-                                                                    : <HeartFilled
+                                                                !isLoggedIn
+                                                                    ? (<HeartOutlined
                                                                         key="heart"
-                                                                        style={{ color: '#000', fontSize: '20px' }}
-                                                                        onClick={() => onHeartClick('close')}
-                                                                    />
+                                                                        style={{ color: '#000', fontSize: '23px' }}
+                                                                    />)
+                                                                    : <HeartContentList />
                                                             }
                                                         </div>
                                                         <span className="blind">게시물 활동</span>
                                                     </a>
                                                 </Link>
 
-                                            </div>
-                                            <div>
-                                                {
-                                                    modalVisible
-                                                    && <Modal
-                                                        visible={modalVisible}
-                                                        closable={true}
-                                                        maskClosable={true}
-                                                        onClose={closeModal}>
-                                                        {
-                                                            !heartActive
-                                                                ? <HeartContent className="content-heart">
-                                                                    123123124
-                                                                </HeartContent>
-                                                                : null
-                                                        }
-                                                    </Modal>
-                                                }
                                             </div>
                                         </li>
                                         <li>
