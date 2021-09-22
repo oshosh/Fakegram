@@ -1,7 +1,10 @@
 # Fakegram (instargram 모방 개인 연습 프로젝트)
  
   ```
-    react-hooks, es6, redux-saga (예정)
+    react-hooks, es6
+    
+    비동기 api, 쓰로틀링 제어, 전역 state 관리 
+    redux-saga
     
     프레임워크
     next.js
@@ -39,7 +42,7 @@
   -AppLayout
   ㄴheader
     ㄴ SearchInput (해시 태그 검색)
-    ㄴ 게시물 활동 - 타 유저가 내 게시판에 좋아요 혹은 댓글 달 경우 리스트 보여주기 (미정)
+    ㄴ 게시물 활동 - 타 유저가 내 게시판에 좋아요 혹은 댓글 달 경우 리스트 보여주기 (HeartContentList)
     ㄴ 아바타
        ㄴ 프로필
           ㄴ 서브 탭 관리 (3개)
@@ -52,7 +55,8 @@
   ㄴ 메인 포스트
      ㄴ 포스트 카드 (PostCard)
         ㄴ더보기 (PostCardHeader, PostCardMoreModal) - react-portal
-          ㄴ 신고 (공용)
+          ㄴ 신고
+             ㄴ 신고 양식 슬라이더 (취소/제출)
           ㄴ 취소 (공용)
           ㄴ 수정 (나 일경우)
           ㄴ 삭제 (나 일경우)
