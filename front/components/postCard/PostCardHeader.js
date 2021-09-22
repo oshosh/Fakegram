@@ -30,9 +30,35 @@ const MoreButton = styled(Button)`
 
 function PostCardHeader({ post }) {
     const [modalVisible, setModalVisible] = useState(false)
+    const [singoState, setSingoState] = useState(false)
 
     const openModal = useCallback((e) => setModalVisible(true), [])
-    const closeModal = useCallback((e) => setModalVisible(false), [])
+    const closeModal = useCallback((text) => (e) => {
+        debugger
+        switch (text) {
+            case '신고':
+                let s1 = document.getElementById('slide1')
+                s1.checked ? setSingoState(true) : setSingoState(false)
+                break;
+            case '취소':
+                setModalVisible(false)
+                console.log(text)
+                break;
+            case '팔로우':
+                console.log(text)
+                break;
+            case '수정':
+                console.log(text)
+                break;
+            case '삭제':
+                console.log(text)
+                break;
+            default:
+                setModalVisible(false)
+                break
+        }
+        // setModalVisible(false)
+    }, [])
 
     const onMoreButtonClick = useCallback((e) => {
         setModalVisible(true)
@@ -67,9 +93,12 @@ function PostCardHeader({ post }) {
                             closable={true}
                             maskClosable={true}
                             onClose={closeModal}>
+
                             <PostCardMoreModal
                                 post={post}
                                 onClose={closeModal}
+                                singoState={singoState}
+                                setSingoState={setSingoState}
                             />
                         </Modoal>
                     </Portal>

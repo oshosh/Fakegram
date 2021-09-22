@@ -10,7 +10,7 @@ const Button = styled.button`
     text-align: center;
 `
 
-function CancleButton({ onClose, textContent }) {
+function CancleButton({ onClose, textContent, handleSingoClick }) {
 
     const handleCloseClick = (e) => {
         if (onClose) {
