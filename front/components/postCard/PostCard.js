@@ -43,6 +43,10 @@ const ListHeaderWrapper = styled.div`
         cursor: pointer;
     }
 `
+const CommentList = styled.div`
+    display: flex;
+    margin: 0 16px;
+`
 
 const CommentFormWrapper = styled.div`
     border-top: 1px solid #dbdbdb;
@@ -103,7 +107,6 @@ function PostCard({ post }) {
                 <>
                     {commentFormOpened && (
                         <>
-
                             <List
                                 header={
                                     <>
@@ -122,7 +125,7 @@ function PostCard({ post }) {
                                         prevData && prevData.length > 0 &&
                                         prevData.map((item, idx) => {
                                             return (
-                                                <>
+                                                <CommentList>
                                                     <Comment
                                                         key={idx + 1} // 추후 id 별 수정
                                                         avatar={<CustomAvatar
@@ -132,7 +135,7 @@ function PostCard({ post }) {
                                                         author={item.User.nickname}
                                                         content={item.content}
                                                     />
-                                                </>
+                                                </CommentList>
                                             )
 
                                         })
