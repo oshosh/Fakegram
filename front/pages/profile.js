@@ -9,8 +9,6 @@ import Router from 'next/router';
 
 function Profile() {
     const { me } = useSelector((state) => state.user)
-    const followingList = [{ nickname: 'hso11' }, { nickname: 'hso22' }, { nickname: 'hso33' }]
-    const followerList = [{ nickname: 'osh1' }, { nickname: 'osh2' }, { nickname: 'osh3' }]
 
     useEffect(() => {
         if (!(me?.id)) {
@@ -26,8 +24,8 @@ function Profile() {
             <AppLayout>
                 <NicknameEditForm />
                 <TabMenu
-                    followerList={followerList}
-                    followingList={followingList}
+                    followerList={me?.Followings}
+                    followingList={me?.Followers}
                 />
             </AppLayout>
         </>

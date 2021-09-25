@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Avatar, Button, Form, Input } from 'antd'
 import styled from 'styled-components';
@@ -76,8 +76,8 @@ const PickerContainer = styled.div`
 
 function PostForm() {
     const Picker = dynamic(() => import("emoji-picker-react")) // no ssr
-
     const { register, handleSubmit, watch, setValue, control } = useForm();
+    const { addPostDone } = useSelector((state) => state.post)
     const dispatch = useDispatch()
 
     const textareaRef = useRef()
@@ -86,6 +86,13 @@ function PostForm() {
     const [emoji, setEmoji] = useState('')
     const [open, setOpen] = useState(false)
     const [textAreaData, setTextAreaData] = useState('')
+
+    useEffect(() => {
+        if (addPostDone) {
+            setTextAreaData('')
+            setValue("text", '')
+        }
+    }, [addPostDone])
 
     const onPickOpenUp = useCallback(() => {
         setOpen(!open)
@@ -97,12 +104,10 @@ function PostForm() {
         }
         setValue("text", textareaRef.current.resizableTextArea.props.value) // 이모지로 ref 통해서 이전 props 값 가져와서 다시 register의 값을 갱신해줘야함..
         console.log(watch())
-        dispatch(addPost())
 
-        setTextAreaData('')
-        setValue("text", '')
+        dispatch(addPost(textAreaData))
 
-    }, [setValue, watch, setTextAreaData])
+    }, [setValue, watch, textAreaData])
 
     const onEmojiClickEvent = useCallback((e, emojiObject) => {
         setEmoji(emojiObject.emoji)

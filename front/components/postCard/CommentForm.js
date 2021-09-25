@@ -1,9 +1,13 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Dropdown, Form, Input, Menu } from 'antd'
 import styled from 'styled-components';
 import { SmileOutlined } from '@ant-design/icons';
 import useInput from '../../hooks/useInput'
 import dynamic from 'next/dynamic'
+import { useDispatch, useSelector } from 'react-redux';
+
+import { addComment, ADD_COMMENT_REQUEST } from '../../reducers/post'
+
 
 const FormContainer = styled.div`
    display: flex;
@@ -40,9 +44,14 @@ const TextArea = styled(Input.TextArea)`
     width: 90%;
 `
 
-function CommentForm({ post }) {
-    const Picker = dynamic(() => import("emoji-picker-react"), { ssr: false, })
+function CommentForm({ post, setCommentFormOpened }) {
+    const dispatch = useDispatch()
 
+    const { addCommentDone } = useSelector((state) => state.post)
+
+    const id = useSelector((state) => state.user.me?.id);
+
+    const Picker = dynamic(() => import("emoji-picker-react"), { ssr: false, })
     const [emoji, setEmoji] = useState('')
     const [commentText, onChangeCommentText, setCommentText] = useInput('');
 
@@ -59,9 +68,29 @@ function CommentForm({ post }) {
         </Menu>
     );
 
+    useEffect(() => {
+        if (addCommentDone) {
+            setCommentText('')
+        }
+    }, [addCommentDone])
+
     const onsubmitComment = useCallback(() => {
         console.log(commentText)
-    }, [commentText])
+        if (id) {
+            dispatch(
+                addComment(
+                    {
+                        content: commentText,     // 댓글 내용
+                        postId: post.id,          // 댓글달은 포스트 번호
+                        useId: id                 // 내가 댓글을 달았으니 내 아이디    
+                    }
+                ))
+            setCommentFormOpened(true)
+        } else {
+            setCommentText('')
+            console.log("로그인 하세요")
+        }
+    }, [commentText, id])
 
     return (
         <>

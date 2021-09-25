@@ -34,7 +34,6 @@ function PostCardHeader({ post }) {
 
     const openModal = useCallback((e) => setModalVisible(true), [])
     const closeModal = useCallback((text) => (e) => {
-        debugger
         switch (text) {
             case '신고':
                 let s1 = document.getElementById('slide1')

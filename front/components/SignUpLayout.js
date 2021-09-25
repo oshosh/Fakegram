@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
-import { Menu } from 'antd'
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
-import { useRouter } from 'next/router';
+import Router from 'next/router';
 
 const SignUpWrapper = styled.section`
     display: flex;
@@ -54,14 +53,19 @@ const SignUpWrapper = styled.section`
 function SignUpLayout({ children }) {
 
     //로그인이 실제로는 정보있는걸 back에서 체크 후 되돌려야함
-    const isLoggedIn = useSelector((state) => state.user.isLoggedIn)
-    const router = useRouter()
+    // const isLoggedIn = useSelector((state) => state.user.isLoggedIn)
+    const { me } = useSelector((state) => state.user)
 
     useEffect(() => {
-        if (isLoggedIn) {
-            router.push('/')
+        if ((me?.id)) {
+            Router.push('/')
         }
-    }, [isLoggedIn])
+    }, [me?.id])
+    // useEffect(() => {
+    //     if (isLoggedIn) {
+    //         router.push('/')
+    //     }
+    // }, [isLoggedIn])
     return (
         <>
             <SignUpWrapper>

@@ -7,7 +7,7 @@ import PostForm from '../components/postForm/PostForm'
 import PostCard from '../components/postCard/PostCard'
 
 function Home() {
-    const { isLoggedIn } = useSelector((state) => state.user);
+    const { me } = useSelector((state) => state.user);
     const { mainPosts } = useSelector((state) => state.post);
 
     return (
@@ -17,7 +17,7 @@ function Home() {
                 <title>Fakegram</title>
             </Head>
             <AppLayout>
-                {isLoggedIn && <PostForm />}
+                {me && <PostForm />}
 
                 {mainPosts.map((post, idx) => {
                     return (<PostCard

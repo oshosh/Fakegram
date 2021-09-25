@@ -98,7 +98,7 @@ const HeartContent = styled.div`
 
 function AppLayout({ children }) {
 
-    const isLoggedIn = useSelector((state) => state.user.isLoggedIn)
+    const me = useSelector((state) => state.user.me)
     // const isLoggedIn = true
     const data = useSelector((state) => state)
 
@@ -118,8 +118,6 @@ function AppLayout({ children }) {
         setHeartActive((prevState) => !prevState)
         openModal()
     }, [openModal])
-
-
 
     return (
         <>
@@ -160,7 +158,7 @@ function AppLayout({ children }) {
                                                     <a className="content-activity">
                                                         <div className="heart">
                                                             {
-                                                                !isLoggedIn
+                                                                !me
                                                                     ? (<HeartOutlined
                                                                         key="heart"
                                                                         style={{ color: '#000', fontSize: '23px' }}
@@ -176,7 +174,7 @@ function AppLayout({ children }) {
                                         </li>
                                         <li>
                                             {
-                                                isLoggedIn
+                                                me
                                                     ? (<Link href="/profile" >
                                                         <a>
                                                             <HeaderProFile />
@@ -198,7 +196,7 @@ function AppLayout({ children }) {
                 <Row gutter={8}>
                     <Col xxl={4} xl={4} lg={5} xs={24} md={24}>
                         {
-                            isLoggedIn
+                            me
                                 ? <UserProfile />
                                 : <LoginForm />
                         }

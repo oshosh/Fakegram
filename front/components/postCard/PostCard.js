@@ -9,7 +9,7 @@ import PostCardHeader from './PostCardHeader';
 import PostImages from './PostImages'
 import PostCardBody from './PostCardBody';
 import CommentForm from './CommentForm'
-import { division } from '../../util/dataUtil';
+import { division, removeDuplicateFromArrayOfObjects, sortedData } from '../../util/dataUtil';
 import CustomAvatar from '../common/CustomAvatar';
 
 import PostCardContent from './PostCardContent';
@@ -61,35 +61,60 @@ function PostCard({ post }) {
     const [commentFormOpened, setCommentFormOpened] = useState(false)
 
     const [isAddBtn, setIsAddBtn] = useState(false)
+    const [permissionAddBtn, setPermissionAddBtn] = useState(true)
+
     const [prevData, setPrevData] = useState([])
-    let add = 0
 
     useEffect(() => {
         const copyPostdata = [...post.Comments] // 원본 복사
         const divisonPostsData = copyPostdata.length !== 0 ? division(3, copyPostdata) : [] // 3개 씩 나눈 2차원 배열 구성
 
         if (divisonPostsData.length > 0) {
-            setPrevData(divisonPostsData[0])
+            setPrevData((prev) => {
+                // 무조건 일단 3개 추가
+                if ((prev && prev.length === 0) || prev.length === 3) {
+                    return divisonPostsData[0]
+                } else {
+                    // 댓글이 추가 되면 이전 데이터와 결합
+                    let data = prev.reverse().concat(post.Comments[post.Comments.length - 1])
+                    return data.reverse()
+                }
+            })
 
-            if (post.Comments.length > 3) {
+            // 더보기 버튼을 절대 허가 하지 않도록 하기 위해서 분기처리 추가
+            if (permissionAddBtn && post.Comments.length > 3) {
                 setIsAddBtn(true)
             }
-        }
-    }, [])
 
+        }
+        // else {
+        //     setPermissionAddBtn(false)
+        // }
+    }, [post])
+
+
+    // 더보기 버튼 이벤트
     const handleMoreComment = useCallback((e) => {
         const copyPostdata = [...post.Comments] // 원본 복사
-        let divisonPostData = division(3, copyPostdata) // 3개 씩 나눈 2차원 배열 구성
-        ++add
-        setPrevData((prevData) => {
-            return prevData.concat(divisonPostData[add])
-        })
 
-        if (add + 1 === divisonPostData.length) {
-            setIsAddBtn(false)
-            console.log("더보기 삭제")
-        }
-    }, [])
+        setPrevData((prevData) => {
+            // 복사한 원본기준으로 어디까지 쓰였는지 comment id 값으로 조회 
+            let lastIndex = copyPostdata.findIndex((v) => {
+                // content에서 id로 바꾸면 됨 db, server 설정 후..
+                return v.content === prevData[prevData.length - 1].content
+            })
+            // 마지막 comment id 기준으로 뒤에 값들은 전부 지움
+            let sliceData = copyPostdata.slice(0, lastIndex)
+            let divisonPostData = division(3, sliceData)
+
+            // 마지막 더보기 배열이 3개가 아니면 더보기 삭제
+            if (!divisonPostData[1]) {
+                setIsAddBtn(false)
+                setPermissionAddBtn(false)
+            }
+            return prevData.concat(divisonPostData[0])
+        })
+    }, [post])
 
     return (
         <PostCardWrapper>
@@ -145,7 +170,10 @@ function PostCard({ post }) {
                         </>
                     )}
                     <CommentFormWrapper>
-                        <CommentForm post={post} />
+                        <CommentForm
+                            post={post}
+                            setCommentFormOpened={setCommentFormOpened}
+                        />
                     </CommentFormWrapper>
                 </>
 

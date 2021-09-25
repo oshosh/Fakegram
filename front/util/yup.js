@@ -1,7 +1,7 @@
 import * as yup from 'yup';
 
 export const signInValidation = yup.object({
-    id: yup
+    email: yup
         .string().email("이메일 형식으로 입력 바랍니다.")
         .required('아이디를 입력해주세요.'),
     password: yup
@@ -12,7 +12,7 @@ export const signInValidation = yup.object({
 });
 
 export const signUpValidation = yup.object({
-    id: yup
+    email: yup
         .string().email("이메일 형식으로 입력 바랍니다.")
         .required('아이디를 입력해주세요.')
         .max(50, '아이디는 50자리 이하여야 합니다.')

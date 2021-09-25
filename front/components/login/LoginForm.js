@@ -36,7 +36,7 @@ const RequiredText = styled.p`
 
 function LoginForm() {
     const dispatch = useDispatch()
-    const { isLoggingIn } = useSelector((state) => state.user)
+    const { logInLoading } = useSelector((state) => state.user)
     const { register, handleSubmit, watch, formState: { errors }, setValue, control } = useForm({
         resolver: yupResolver(signInValidation),
         mode: 'onBlur',
@@ -44,17 +44,10 @@ function LoginForm() {
     const onSubmitSend = useCallback((e) => {
         console.log(watch())
 
-        // dispatch({
-        //     type: LOG_IN_REQUEST,
-        //     payload: {
-        //         id: watch().id,
-        //         password: watch().password,
-        //     }
-        // })
         dispatch(
             loginRequestAction(
                 {
-                    id: watch().id,
+                    email: watch().email,
                     password: watch().password,
                 }
             ))
@@ -69,17 +62,17 @@ function LoginForm() {
                 <Controller
                     as={<Input />}
                     type="text"
-                    name="id"
+                    name="email"
                     control={control}
                     placeholder={"User ID"}
                     defaultValue=""
                     prefix={<UserOutlined />}
                     required
-                    {...register("id")}
+                    {...register("email")}
                 />
                 <ErrorMessage
                     errors={errors}
-                    name="id"
+                    name="email"
                     render={({ message }) => {
                         return (
                             <RequiredText>{message}</RequiredText>
@@ -112,7 +105,7 @@ function LoginForm() {
                 <Button
                     type="primary"
                     htmlType="submit"
-                    loading={isLoggingIn}
+                    loading={logInLoading}
                     icon={<PoweroffOutlined />}
                 >로그인
                 </Button>

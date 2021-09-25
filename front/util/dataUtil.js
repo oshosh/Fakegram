@@ -3,8 +3,9 @@ export const division = (n, data) => {
     let cnt = Math.floor(len / n) + (Math.floor(len % n) > 0 ? 1 : 0);
     let tmp = []
 
+    let reverseData = data.reverse()
     for (let i = 0; i < cnt; i++) {
-        tmp.push(data.splice(0, n));
+        tmp.push(reverseData.splice(0, n));
     }
 
     return tmp;

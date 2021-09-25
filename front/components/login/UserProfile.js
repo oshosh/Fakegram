@@ -15,9 +15,9 @@ function UserProfile() {
     return (
         <Card
             actions={[
-                <div key="twit">게시글<br />0</div>,
-                <div key="followings">팔로잉 <br />0</div>,
-                <div key="follower">팔로워 <br />0</div>,
+                <div key="twit">게시글<br />{me.Posts.length}</div>,
+                <div key="followings">팔로잉 <br />{me.Followings.length}</div>,
+                <div key="follower">팔로워 <br />{me.Followers.length}</div>,
             ]}
         >
             <Card.Meta
