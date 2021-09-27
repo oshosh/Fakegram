@@ -35,6 +35,9 @@
     
     카카오 로그인
     kakao login API (추후 back 리다이렉션 필요)
+    
+    댓글 더보기 id 관련 중복 문제로 인한 - 더미 데이터 생성용 npm 추가 (server에서 db 모델 생성후 삭제 예정)
+    shortId
   ```
  
  # 작업 할 내역들 및 구조
@@ -65,7 +68,7 @@
         ㄴ게시물 내용 (PostCardContent)
           ㄴ 게시물 내용 더보기 구현
           ㄴ 해시태그 regex / link 구성
-        ㄴ포스트 카드 아이템 (PostCardBody)
+        ㄴ포스트 카드 아이템 (PostCardBody - 툴팁 추가)
           ㄴ 좋아요
           ㄴ 댓글 보기 
              ㄴ 더보기 구현 (수정, 삭제, 게시물 등록시에만 댓글 수정 삭제에 따른 댓글 상태 변화 -facebook도 같은 형식 확인)
