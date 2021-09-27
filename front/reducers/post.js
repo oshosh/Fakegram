@@ -1,4 +1,5 @@
 import { createAction, handleActions } from "redux-actions"
+import shortId from 'shortid'
 
 export const initialState = {
     mainPosts: [
@@ -18,57 +19,57 @@ export const initialState = {
                 src: 'https://gimg.gilbut.co.kr/book/BN001998/rn_view_BN001998.jpg',
             }],
             Comments: [
-                //     {
-                //     User: {
-                //         nickname: '1',
-                //     },
-                //     content: '1',
-                //     id: 1,
-                // }, {
-                //     User: {
-                //         nickname: '2',
-                //     },
-                //     content: '2',
-                //     id: 2,
-                // },
-                // {
-                //     User: {
-                //         nickname: '3',
-                //     },
-                //     content: '3',
-                //     id: 3,
-                // }, {
-                //     User: {
-                //         nickname: '4',
-                //     },
-                //     content: '4',
-                //     id: 4,
-                // },
-                // {
-                //     User: {
-                //         nickname: '5',
-                //     },
-                //     content: '5',
-                //     id: 5,
-                // }, {
-                //     User: {
-                //         nickname: '6',
-                //     },
-                //     content: '6',
-                //     id: 6,
-                // }, {
-                //     User: {
-                //         nickname: '7',
-                //     },
-                //     content: '7',
-                //     id: 7,
-                // }, {
-                //     User: {
-                //         nickname: '8',
-                //     },
-                //     content: '8',
-                //     id: 8,
-                // }
+                {
+                    User: {
+                        nickname: '1',
+                    },
+                    content: '1',
+                    id: 1,
+                }, {
+                    User: {
+                        nickname: '2',
+                    },
+                    content: '2',
+                    id: 2,
+                },
+                {
+                    User: {
+                        nickname: '3',
+                    },
+                    content: '3',
+                    id: 3,
+                }, {
+                    User: {
+                        nickname: '4',
+                    },
+                    content: '4',
+                    id: 4,
+                },
+                {
+                    User: {
+                        nickname: '5',
+                    },
+                    content: '5',
+                    id: 5,
+                }, {
+                    User: {
+                        nickname: '6',
+                    },
+                    content: '6',
+                    id: 6,
+                }, {
+                    User: {
+                        nickname: '7',
+                    },
+                    content: '7',
+                    id: 7,
+                }, {
+                    User: {
+                        nickname: '8',
+                    },
+                    content: '8',
+                    id: 8,
+                }
                 //, {
                 //     User: {
                 //         nickname: '9',
@@ -118,19 +119,7 @@ export const initialState = {
     removePostError: null,
 };
 
-const dummyPost = {
-    id: 2,
-    content: '더미 포스트',
-    User: {
-        id: 1,
-        nickname: 'osh',
-    },
-    Images: [{
-        src: 'https://bookthumb-phinf.pstatic.net/cover/137/995/13799585.jpg?udate=20180726',
-    },],
-    Comments: [],
-};
-
+// 액션 함수
 export const ADD_POST_REQUEST = "ADD_POST_REQUEST";
 export const ADD_POST_SUCCESS = "ADD_POST_SUCCESS";
 export const ADD_POST_FAILURE = "ADD_POST_FAILURE";
@@ -146,8 +135,21 @@ export const ADD_COMMENT_FAILURE = 'ADD_COMMENT_FAILURE';
 export const addPost = createAction(ADD_POST_REQUEST, (data) => data);
 export const addComment = createAction(ADD_COMMENT_REQUEST, (data) => data);
 
+const dummyPost = (data) => ({
+    id: shortId.generate(),
+    content: data,
+    User: {
+        id: 1,
+        nickname: 'osh',
+    },
+    Images: [{
+        src: 'https://bookthumb-phinf.pstatic.net/cover/137/995/13799585.jpg?udate=20180726',
+    },],
+    Comments: [],
+});
+
 const dummyComment = (data) => ({
-    id: 9,
+    id: shortId.generate(),
     content: data,
     User: {
         id: 1,
@@ -169,7 +171,7 @@ const reducer = handleActions(
         [ADD_POST_SUCCESS]: (state, action) => {
             return {
                 ...state,
-                mainPosts: [dummyPost, ...state.mainPosts],
+                mainPosts: [dummyPost(action.data), ...state.mainPosts],
                 addPostLoading: false,
                 addPostDone: true,
             }
@@ -192,15 +194,13 @@ const reducer = handleActions(
             }
         },
         [ADD_COMMENT_SUCCESS]: (state, action) => {
-
-            const postIndex = state.mainPosts.findIndex((v) => v.id === action.data.postId)
-
-            const post = { ...state.mainPosts[postIndex] }
+            const postIndex = state.mainPosts.findIndex((v) => v.id === action.data.postId) // 현재 포스트 id 조회
+            const post = { ...state.mainPosts[postIndex] } // 포스트 복사
             // post.Comments = [dummyComment(action.data.content), ...post.Comments]
-            post.Comments = [...post.Comments, dummyComment(action.data.content)]
+            post.Comments = [...post.Comments, dummyComment(action.data.content)] // 복사된 post의 comments에 기존 코멘트와 넘겨준 코멘트를 합침
 
             const mainPosts = [...state.mainPosts]
-            mainPosts[postIndex] = post
+            mainPosts[postIndex] = post // mainposts에 기존 포스트를 덮어침
 
             return {
                 ...state,

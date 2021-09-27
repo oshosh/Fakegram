@@ -101,7 +101,7 @@ function PostCard({ post }) {
             // 복사한 원본기준으로 어디까지 쓰였는지 comment id 값으로 조회 
             let lastIndex = copyPostdata.findIndex((v) => {
                 // content에서 id로 바꾸면 됨 db, server 설정 후..
-                return v.content === prevData[prevData.length - 1].content
+                return v.id === prevData[prevData.length - 1].id
             })
             // 마지막 comment id 기준으로 뒤에 값들은 전부 지움
             let sliceData = copyPostdata.slice(0, lastIndex)

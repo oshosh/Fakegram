@@ -15,10 +15,6 @@ function* addPost(action) {
         yield put({
             type: ADD_POST_SUCCESS,
             data: action.payload
-            // {
-            //     id,
-            //     content: action.data
-            // }
         });
     } catch (err) {
         console.log(err);
