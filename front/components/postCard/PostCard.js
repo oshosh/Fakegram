@@ -127,7 +127,7 @@ function PostCard({ post }) {
                     description={<PostCardContent postData={post.content} />}
                 />
             </Card>
-            <PostCardBody setCommentFormOpened={setCommentFormOpened} />
+            <PostCardBody setCommentFormOpened={setCommentFormOpened} post={post} />
             {
                 <>
                     {commentFormOpened && (

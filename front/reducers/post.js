@@ -3,6 +3,49 @@ import shortId from 'shortid'
 
 export const initialState = {
     mainPosts: [
+
+        {
+            id: 3,
+            User: {
+                id: 3,
+                nickname: 'osh3',
+            },
+            content: '세번째 게시글',
+            // content: 'hiasdkjf sadfjka;sdja asd;fjkla;sldkfffff',
+            Images: [{
+                src: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/152229/slider-img-1.jpg',
+            }],
+            Comments: [
+                {
+                    User: {
+                        nickname: '1',
+                    },
+                    content: '1',
+                    id: 1,
+                },
+            ]
+        },
+        {
+            id: 2,
+            User: {
+                id: 2,
+                nickname: 'osh2',
+            },
+            content: '두번째 게시글',
+            // content: 'hiasdkjf sadfjka;sdja asd;fjkla;sldkfffff',
+            Images: [{
+                src: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/152229/slider-img-1.jpg',
+            }],
+            Comments: [
+                {
+                    User: {
+                        nickname: '1',
+                    },
+                    content: '1',
+                    id: 1,
+                },
+            ]
+        },
         {
             id: 1,
             User: {
@@ -103,6 +146,7 @@ export const initialState = {
                 // }
             ]
         },
+
     ],
     imagePaths: [],
 
@@ -136,8 +180,8 @@ export const addPost = createAction(ADD_POST_REQUEST, (data) => data);
 export const addComment = createAction(ADD_COMMENT_REQUEST, (data) => data);
 
 const dummyPost = (data) => ({
-    id: shortId.generate(),
-    content: data,
+    id: data.id,
+    content: data.content,
     User: {
         id: 1,
         nickname: 'osh',
@@ -216,6 +260,7 @@ const reducer = handleActions(
                 addCommentError: action.error,
             }
         },
+
     },
     initialState
 )

@@ -17,6 +17,14 @@ export const initialState = {
     changeNicknameDone: false,
     changeNicknameError: null,
 
+    savePostLoading: false, // 게시물 저장하기 활성화 시도중
+    savePostDone: false,
+    savePostError: null,
+
+    unsavePostLoading: false, // 게시물 저장하기 활성화 취소 시도중
+    unsavePostDone: false,
+    unsavePostError: null,
+
     me: null,
     signUpData: {},
     loginData: {}
@@ -46,13 +54,25 @@ export const UNFOLLOW_REQUEST = 'UNFOLLOW_REQUEST';
 export const UNFOLLOW_SUCCESS = 'UNFOLLOW_SUCCESS';
 export const UNFOLLOW_FAILURE = 'UNFOLLOW_FAILURE';
 
+export const ADD_POST_TO_ME = 'ADD_POST_TO_ME' // 나의 게시물 추가
+export const REMOVE_POST_OF_ME = 'REMOVE_POST_OF_ME' // 나의 게시물 삭제
+
+export const SAVE_POST_REQUEST = 'SAVE_POST_REQUEST' // 게시물 저장하기 활성화
+export const SAVE_POST_SUCCESS = 'SAVE_POST_SUCCESS';
+export const SAVE_POST_FAILURE = 'SAVE_POST_FAILURE';
+
+export const UNSAVE_POST_REQUEST = 'UNSAVE_POST_REQUEST' // 게시물 저장하기 활성화 취소
+export const UNSAVE_POST_SUCCESS = 'UNSAVE_POST_SUCCESS';
+export const UNSAVE_POST_FAILURE = 'UNSAVE_POST_FAILURE';
+
 const dummyUser = (data) => ({
     ...data,
     nickname: 'osh',
     id: 1,
-    Posts: [1],
+    Posts: [{ id: 1 }],
     Followings: [{ nickname: 'hso11' }, { nickname: 'hso22' }, { nickname: 'hso33' }],
     Followers: [{ nickname: 'osh1' }, { nickname: 'osh2' }, { nickname: 'osh3' }],
+    SavePosts: [{ id: 3 }], // 다른 사람의 게시물 저장 일단 임시로..
 })
 // 액션 함수
 export const loginRequestAction = createAction(LOG_IN_REQUEST, data => {
@@ -164,6 +184,75 @@ const reducer = handleActions(
                 changeNicknameError: action.error
             }
         },
+
+        //게시물 저장하기 활성화
+        [SAVE_POST_REQUEST]: (state, action) => {
+            return {
+                ...state,
+                savePostLoading: true,
+                savePostDone: false,
+                savePostError: null
+            }
+        },
+        [SAVE_POST_SUCCESS]: (state, action) => {
+            return {
+                ...state,
+                me: {
+                    ...state.me,
+                    SavePosts: [{ id: action.data }, ...state.me.SavePosts],
+                },
+                savePostLoading: false,
+                savePostDone: true,
+            }
+        },
+        [SAVE_POST_FAILURE]: (state, action) => {
+            return {
+                ...state,
+                savePostLoading: false,
+                savePostError: action.error
+            }
+        },
+
+        //게시물 저장하기 활성화 취소
+        [UNSAVE_POST_REQUEST]: (state, action) => {
+            return {
+                ...state,
+                unsavePostLoading: true,
+                unsavePostDone: false,
+                unsavePostError: null
+            }
+        },
+        [UNSAVE_POST_SUCCESS]: (state, action) => {
+            let filterData = state.me.SavePosts.filter((v) => v.id !== action.data)
+            debugger
+            return {
+                ...state,
+                me: {
+                    ...state.me,
+                    SavePosts: filterData,
+                },
+                unsavePostLoading: false,
+                unsavePostDone: true,
+            }
+        },
+        [UNSAVE_POST_FAILURE]: (state, action) => {
+            return {
+                ...state,
+                unsavePostLoading: false,
+                unsavePostError: action.error
+            }
+        },
+
+        // 내가 게시물 추가 할 경우
+        [ADD_POST_TO_ME]: (state, action) => {
+            return {
+                ...state,
+                me: {
+                    ...state.me,
+                    Posts: [{ id: action.data }, ...state.me.Posts],
+                }
+            }
+        }
     },
     initialState
 )

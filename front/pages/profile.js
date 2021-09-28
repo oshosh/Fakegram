@@ -26,6 +26,7 @@ function Profile() {
                 <TabMenu
                     followerList={me?.Followings}
                     followingList={me?.Followers}
+                    SavePostsList={me?.SavePosts}
                 />
             </AppLayout>
         </>

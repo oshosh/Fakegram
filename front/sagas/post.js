@@ -1,21 +1,34 @@
 import { all, delay, fork, put, takeLatest } from 'redux-saga/effects';
+import shortid from 'shortid';
 import {
     ADD_COMMENT_FAILURE, ADD_COMMENT_REQUEST, ADD_COMMENT_SUCCESS,
     ADD_POST_FAILURE, ADD_POST_REQUEST, ADD_POST_SUCCESS
 } from "../reducers/post";
+import { ADD_POST_TO_ME } from '../reducers/user';
 
 function addPostAPI(data) {
     return axios.post('/api/post', data);
 }
-
+// 게시물 추가하기
 function* addPost(action) {
     try {
         // const result = yield call(addPostAPI, action.data);
         yield delay(1000);
+        const id = shortid.generate()
+
         yield put({
             type: ADD_POST_SUCCESS,
-            data: action.payload
+            data: {
+                id,
+                content: action.payload
+            }
         });
+
+        // 나의 게시물을 추가 할 경우
+        yield put({
+            type: ADD_POST_TO_ME,
+            data: id,
+        })
     } catch (err) {
         console.log(err);
         yield put({

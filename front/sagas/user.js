@@ -2,7 +2,9 @@ import { all, fork, delay, takeLatest, put } from "@redux-saga/core/effects"
 import {
     LOG_IN_REQUEST, LOG_IN_SUCCESS, LOG_OUT_REQUEST,
     LOG_OUT_SUCCESS, LOG_IN_FAILURE, LOG_OUT_FAILURE,
-    SIGN_UP_REQUEST, SIGN_UP_SUCCESS, SIGN_UP_FAILURE
+    SIGN_UP_REQUEST, SIGN_UP_SUCCESS, SIGN_UP_FAILURE,
+    SAVE_POST_REQUEST, SAVE_POST_SUCCESS, SAVE_POST_FAILURE,
+    UNSAVE_POST_REQUEST, UNSAVE_POST_FAILURE, UNSAVE_POST_SUCCESS,
 } from "../reducers/user"
 import axios from 'axios'
 
@@ -69,6 +71,40 @@ function* signUp(action) {
     }
 }
 
+function* savePost(action) {
+    try {
+
+        yield delay(1000);
+        yield put({
+            type: SAVE_POST_SUCCESS,
+            data: action.id,
+        })
+    } catch (error) {
+        console.log(error)
+        yield put({
+            type: SAVE_POST_FAILURE,
+            error: error.response.data,
+        })
+    }
+}
+
+function* unSavePost(action) {
+    try {
+
+        yield delay(1000);
+        yield put({
+            type: UNSAVE_POST_SUCCESS,
+            data: action.id,
+        })
+    } catch (error) {
+        console.log(error)
+        yield put({
+            type: UNSAVE_POST_FAILURE,
+            error: error.response.data,
+        })
+    }
+}
+
 function* watchLogIn() {
     yield takeLatest(LOG_IN_REQUEST, logIn)
 }
@@ -81,10 +117,20 @@ function* watchSignUp() {
     yield takeLatest(SIGN_UP_REQUEST, signUp)
 }
 
+function* watchSavePosts() {
+    yield takeLatest(SAVE_POST_REQUEST, savePost)
+}
+
+function* watchUnSavePosts() {
+    yield takeLatest(UNSAVE_POST_REQUEST, unSavePost)
+}
+
 export default function* userSaga() {
     yield all([
         fork(watchLogIn),
         fork(watchLogOut),
-        fork(watchSignUp)
+        fork(watchSignUp),
+        fork(watchSavePosts),
+        fork(watchUnSavePosts),
     ])
 }
