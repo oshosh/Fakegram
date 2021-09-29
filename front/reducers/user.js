@@ -223,8 +223,8 @@ const reducer = handleActions(
             }
         },
         [UNSAVE_POST_SUCCESS]: (state, action) => {
-            let filterData = state.me.SavePosts.filter((v) => v.id !== action.data)
-            debugger
+            const filterData = state.me.SavePosts.filter((v) => v.id !== action.data)
+
             return {
                 ...state,
                 me: {
@@ -252,7 +252,19 @@ const reducer = handleActions(
                     Posts: [{ id: action.data }, ...state.me.Posts],
                 }
             }
-        }
+        },
+
+        // 게시물 삭제
+        [REMOVE_POST_OF_ME]: (state, action) => {
+            const removePost = state.me.Posts.filter((v) => v.id !== action.data)
+            return {
+                ...state,
+                me: {
+                    ...state.me,
+                    Posts: removePost,
+                }
+            }
+        },
     },
     initialState
 )

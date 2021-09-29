@@ -1,34 +1,21 @@
-import { EllipsisOutlined } from '@ant-design/icons';
-import { Button, Popover } from 'antd';
 import React, { useCallback, useEffect, useState } from 'react';
+import { Button, Popover } from 'antd';
+import { EllipsisOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 
 import Portal from '../common/Portal'
 import Modoal from '../common/Modoal'
+import Loading from '../common/Loading'
 import PostCardMoreModal from './PostCardMoreModal'
 
 import CustomAvatar from '../common/CustomAvatar'
+import { useDispatch, useSelector } from 'react-redux';
+import { REMOVE_POST_REQUEST } from '../../reducers/post';
 
-const Header = styled.header`
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    & .header-container {
-        display: flex;
-        align-items: center;
-        
-        & .my-avatar {
-            margin-right: 10px;
-        }
-    }
-`
-
-const MoreButton = styled(Button)`
-   border: none ;
-`
 
 function PostCardHeader({ post }) {
+    const dispatch = useDispatch()
+
     const [modalVisible, setModalVisible] = useState(false)
     const [singoState, setSingoState] = useState(false)
 
@@ -50,13 +37,15 @@ function PostCardHeader({ post }) {
                 console.log(text)
                 break;
             case '삭제':
-                console.log(text)
+                dispatch({
+                    type: REMOVE_POST_REQUEST,
+                    id: post.id,
+                })
                 break;
             default:
                 setModalVisible(false)
                 break
         }
-        // setModalVisible(false)
     }, [])
 
     const onMoreButtonClick = useCallback((e) => {
@@ -108,3 +97,22 @@ function PostCardHeader({ post }) {
 }
 
 export default PostCardHeader;
+
+const Header = styled.header`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    & .header-container {
+        display: flex;
+        align-items: center;
+        
+        & .my-avatar {
+            margin-right: 10px;
+        }
+    }
+`
+
+const MoreButton = styled(Button)`
+   border: none ;
+`

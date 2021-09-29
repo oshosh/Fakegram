@@ -228,6 +228,31 @@ const reducer = handleActions(
             }
         },
 
+        // 포스트 삭제
+        [REMOVE_POST_REQUEST]: (state, action) => {
+            return {
+                ...state,
+                removeLoading: true,
+                removeDone: false,
+                removeError: null,
+            }
+        },
+        [REMOVE_POST_SUCCESS]: (state, action) => {
+            return {
+                ...state,
+                mainPosts: state.mainPosts.filter((v) => v.id !== action.data),
+                removeLoading: false,
+                removeDone: true,
+            }
+        },
+        [REMOVE_POST_FAILURE]: (state, action) => {
+            return {
+                ...state,
+                removeLoading: false,
+                removeError: action.error,
+            }
+        },
+
         // 코멘트 추가
         [ADD_COMMENT_REQUEST]: (state, action) => {
             return {

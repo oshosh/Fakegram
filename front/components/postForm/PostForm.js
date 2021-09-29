@@ -8,6 +8,9 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { addPost } from '../../reducers/post'
 
+import Loading from '../common/Loading'
+import Portal from '../common/Portal'
+
 const ContentWrapper = styled.div`
     margin-top: 20px;
     border: 1px solid  #d2d2d2;
@@ -77,7 +80,7 @@ const PickerContainer = styled.div`
 function PostForm() {
     const Picker = dynamic(() => import("emoji-picker-react")) // no ssr
     const { register, handleSubmit, watch, setValue, control } = useForm();
-    const { addPostDone } = useSelector((state) => state.post)
+    const { addPostDone, addPostLoading } = useSelector((state) => state.post)
     const dispatch = useDispatch()
 
     const textareaRef = useRef()
@@ -93,6 +96,23 @@ function PostForm() {
             setValue("text", '')
         }
     }, [addPostDone])
+
+    useEffect(() => {
+        if (addPostLoading) {
+        }
+    }, [addPostLoading])
+
+    const LoadingPortal = () => {
+        return (
+            <>
+                <Portal
+                    elementId={'#loading'}
+                >
+                    <Loading type="spokes" color="blue" message={'데이터 처리중 입니다.'} />
+                </Portal>
+            </>
+        )
+    }
 
     const onPickOpenUp = useCallback(() => {
         setOpen(!open)
@@ -201,6 +221,10 @@ function PostForm() {
                     </Form>
                 </div>
             </ContentWrapper>
+
+            {
+                addPostLoading && LoadingPortal()
+            }
         </>
 
     );
