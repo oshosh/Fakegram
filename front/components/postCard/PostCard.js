@@ -103,6 +103,7 @@ function PostCard({ post }) {
                 // content에서 id로 바꾸면 됨 db, server 설정 후..
                 return v.id === prevData[prevData.length - 1].id
             })
+
             // 마지막 comment id 기준으로 뒤에 값들은 전부 지움
             let sliceData = copyPostdata.slice(0, lastIndex)
             let divisonPostData = division(3, sliceData)
@@ -148,11 +149,11 @@ function PostCard({ post }) {
                                 <li>
                                     {
                                         prevData && prevData.length > 0 &&
-                                        prevData.map((item, idx) => {
+                                        prevData.map((item, idx, arr) => {
                                             return (
                                                 <CommentList>
                                                     <Comment
-                                                        key={idx + 1} // 추후 id 별 수정
+                                                        key={item.id} // 추후 id 별 수정
                                                         avatar={<CustomAvatar
                                                             size={"medium"}
                                                             textContent={"OH"}

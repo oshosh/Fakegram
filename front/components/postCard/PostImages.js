@@ -42,7 +42,7 @@ function PostImages({ images }) {
 
     return (
         <>
-            <PostSlick className='center' src={images[0].src} handleImageMove={handleImageMove} />
+            <PostSlick className='center' images={images} handleImageMove={handleImageMove} />
         </>
     );
 }

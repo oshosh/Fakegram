@@ -81,7 +81,10 @@ function PostCardMoreModal({ singoState, onClose, setSingoState }) {
             {
                 me ?
                     <>
-                        <Menu.Item danger>
+                        <Menu.Item
+                            key="deletePostMenu"
+                            danger
+                        >
                             <CancleButton
                                 onClose={onClose('삭제')}
                                 textContent={"삭제"}
@@ -89,14 +92,18 @@ function PostCardMoreModal({ singoState, onClose, setSingoState }) {
                         </Menu.Item>
 
                         <Menu.Divider />
-                        <Menu.Item>
+                        <Menu.Item
+                            key="updatePostMenu"
+                        >
                             <CancleButton
                                 onClose={onClose('수정')}
                                 textContent={"수정"}
                             />
                         </Menu.Item>
                         <Menu.Divider />
-                        <Menu.Item>
+                        <Menu.Item
+                            id="followingMenu"
+                        >
                             <CancleButton
                                 onClose={onClose('팔로우')}
                                 textContent={"팔로우"}
@@ -105,7 +112,10 @@ function PostCardMoreModal({ singoState, onClose, setSingoState }) {
                     </>
                     :
                     (
-                        <Menu.Item danger>
+                        <Menu.Item
+                            id="singoMenu"
+                            danger
+                        >
                             <CancleButton
                                 onClose={onClose('신고')}
                                 textContent={"신고"}
@@ -137,7 +147,9 @@ function PostCardMoreModal({ singoState, onClose, setSingoState }) {
                         <MenuWrapper singoState={singoState}>
                             {menuItem}
                             <Menu.Divider />
-                            <Menu.Item>
+                            <Menu.Item
+                                key="cancelMenu"
+                            >
                                 <CancleButton
                                     onClose={onClose('취소')}
                                     textContent={"취소"}

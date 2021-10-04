@@ -71,7 +71,7 @@ const NextArrow = styled.button`
     cursor: pointer;
 `
 
-function PostSlick({ src, handleImageMove }) {
+function PostSlick({ images, handleImageMove }) {
 
     const settings = {
         dots: true,
@@ -85,6 +85,7 @@ function PostSlick({ src, handleImageMove }) {
     // const handleClick = (text) => (e) => {
     //     handleImageMove(text)(e)
     // }
+
     return (
         <>
             <Global />
@@ -92,10 +93,13 @@ function PostSlick({ src, handleImageMove }) {
             <SlickWrapper className="container">
                 <Slider {...settings}>
                     {
-                        [src, src, src, src].map((data) => {
+                        images && images.map((image) => {
                             return (
                                 <div>
-                                    <SlickSlide src={data} />
+                                    <SlickSlide
+                                        id={image.id}
+                                        src={image.src}
+                                    />
 
                                 </div>
                             )
