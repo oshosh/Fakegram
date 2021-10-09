@@ -68,7 +68,7 @@ function* addPost(action) {
         });
     }
 }
-
+//https://coffeeandcakeandnewjeong.tistory.com/52
 function removePostAPI(data) {
     return axios.post('/api/post', data);
 }
