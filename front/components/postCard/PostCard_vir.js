@@ -55,7 +55,7 @@ const CommentFormWrapper = styled.div`
     width: 100%;
     position: relative;
 `
-function PostCard({ post }) {
+function PostCard({ post, style }) {
     const isLoggedIn = useSelector((state) => state.user.isLoggedIn)
     const [commentFormOpened, setCommentFormOpened] = useState(false)
 
@@ -117,7 +117,7 @@ function PostCard({ post }) {
     }, [post])
 
     return (
-        <PostCardWrapper >
+        <PostCardWrapper style={style}>
             <Card
                 title={<PostCardHeader post={post} />}
                 cover={post.Images[0] && <PostImages images={post.Images} />}
@@ -194,4 +194,4 @@ PostCard.prototype = {
         Images: PropType.arrayOf(PropType.object),
     }).isRequired
 }
-export default PostCard;
+export default React.memo(PostCard);

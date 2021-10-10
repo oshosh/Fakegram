@@ -42,7 +42,6 @@ function Home() {
             </Head>
             <AppLayout>
                 {me && <PostForm />}
-
                 {mainPosts.map((post, idx) => {
                     return (<PostCard
                         key={post.id}
