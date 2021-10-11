@@ -1,6 +1,7 @@
 import Slider from 'react-slick';
 import React, { useEffect } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
+import PropTypes from 'prop-types'
 
 export const Global = createGlobalStyle`
     .slick-slide {
@@ -97,6 +98,7 @@ function PostSlick({ images, handleImageMove }) {
                             return (
                                 <div>
                                     <SlickSlide
+                                        key={image.id}
                                         id={image.id}
                                         src={image.src}
                                     />
@@ -112,5 +114,7 @@ function PostSlick({ images, handleImageMove }) {
         </>
     );
 }
-
+PostSlick.propTypes = {
+    images: PropTypes.arrayOf(PropTypes.object)
+}
 export default PostSlick;

@@ -37,7 +37,7 @@ function FollowList({ header, data }) {
                 return (
                     <List.Item style={TabListBoxStyle}>
                         <Card actions={[< DeleteOutlined key="delete" />]}>
-                            <Card.Meta description={item.nickname} />
+                            <Card.Meta description={item.id} />
                         </Card>
                     </List.Item>
                 )

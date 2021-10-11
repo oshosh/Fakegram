@@ -11,9 +11,13 @@ import PostCardMoreModal from './PostCardMoreModal';
 import CustomAvatar from '../common/CustomAvatar';
 import { useDispatch, useSelector } from 'react-redux';
 import { REMOVE_POST_REQUEST } from '../../reducers/post';
+import { FOLLOW_REQUEST, UNFOLLOW_REQUEST } from '../../reducers/user';
 
 function PostCardHeader({ post }) {
   const dispatch = useDispatch();
+
+  const me = useSelector((state) => state.user.me)
+  const isFollowing = me?.Followings.find((v) => v.id === post.User.id); // 내가 이사람을 팔로우 했는지 ? 찾아라
 
   const [modalVisible, setModalVisible] = useState(false);
   const [singoState, setSingoState] = useState(false);
@@ -31,7 +35,17 @@ function PostCardHeader({ post }) {
           console.log(text);
           break;
         case '팔로우':
-          console.log(text);
+          if (isFollowing) {
+            dispatch({
+              type: UNFOLLOW_REQUEST,
+              id: post.User.id,
+            });
+          } else {
+            dispatch({
+              type: FOLLOW_REQUEST,
+              id: post.User.id,
+            });
+          }
           break;
         case '수정':
           console.log(text);
@@ -47,7 +61,7 @@ function PostCardHeader({ post }) {
           break;
       }
     },
-    [],
+    [isFollowing],
   );
 
   const onMoreButtonClick = useCallback(

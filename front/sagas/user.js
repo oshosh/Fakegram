@@ -5,8 +5,54 @@ import {
     SIGN_UP_REQUEST, SIGN_UP_SUCCESS, SIGN_UP_FAILURE,
     SAVE_POST_REQUEST, SAVE_POST_SUCCESS, SAVE_POST_FAILURE,
     UNSAVE_POST_REQUEST, UNSAVE_POST_FAILURE, UNSAVE_POST_SUCCESS,
+    UNFOLLOW_REQUEST, UNFOLLOW_SUCCESS, UNFOLLOW_FAILURE,
+    FOLLOW_REQUEST, FOLLOW_SUCCESS, FOLLOW_FAILURE,
 } from "../reducers/user"
 import axios from 'axios'
+
+
+function followAPI(data) {
+    return axios.patch(`/user/${data}/follow`);
+}
+
+function* follow(action) {
+    try {
+        // const result = yield call(followAPI, action.data);
+        yield delay(1000);
+
+        yield put({
+            type: FOLLOW_SUCCESS,
+            data: action.id,
+        });
+    } catch (err) {
+        console.error(err)
+        yield put({
+            type: FOLLOW_FAILURE,
+            error: err.response.data,
+        });
+    }
+}
+
+function unfollowAPI(data) {
+    return axios.delete(`/user/${data}/follow`);
+}
+
+function* unfollow(action) {
+    try {
+        // const result = yield call(unfollowAPI, action.data);
+        yield delay(1000);
+        yield put({
+            type: UNFOLLOW_SUCCESS,
+            data: action.id,
+        });
+    } catch (err) {
+        console.error(err)
+        yield put({
+            type: UNFOLLOW_FAILURE,
+            error: err.response.data,
+        });
+    }
+}
 
 function logInAPI(data) {
     return axios.post('/api/login', data)
@@ -105,6 +151,14 @@ function* unSavePost(action) {
     }
 }
 
+function* watchFollow() {
+    yield takeLatest(FOLLOW_REQUEST, follow)
+}
+
+function* watchUnfollow() {
+    yield takeLatest(UNFOLLOW_REQUEST, unfollow)
+}
+
 function* watchLogIn() {
     yield takeLatest(LOG_IN_REQUEST, logIn)
 }
@@ -127,6 +181,8 @@ function* watchUnSavePosts() {
 
 export default function* userSaga() {
     yield all([
+        fork(watchFollow),
+        fork(watchUnfollow),
         fork(watchLogIn),
         fork(watchLogOut),
         fork(watchSignUp),

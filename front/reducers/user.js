@@ -26,6 +26,14 @@ export const initialState = {
     unsavePostDone: false,
     unsavePostError: null,
 
+    followLoading: false, // 팔로우 시도중
+    followDone: false,
+    followError: null,
+
+    unfollowLoading: false, // 언팔로우 시도중
+    unfollowDone: false,
+    unfollowError: null,
+
     me: null,
     signUpData: {},
     loginData: {},
@@ -72,11 +80,11 @@ const dummyUser = (data) => ({
     id: 1,
     Posts: [{ id: 1 }],
     Followings: [
-        { nickname: 'hso11' },
-        { nickname: 'hso22' },
-        { nickname: 'hso33' },
+        { id: 'hso11' },
+        { id: 'hso22' },
+        { id: 'hso33' },
     ],
-    Followers: [{ nickname: 'osh1' }, { nickname: 'osh2' }, { nickname: 'osh3' }],
+    Followers: [{ id: 'osh1' }, { id: 'osh2' }, { id: 'osh3' }],
     SavePosts: [{ id: 3 }], // 다른 사람의 게시물 저장 일단 임시로..
 });
 // 액션 함수
@@ -88,6 +96,48 @@ export const logoutRequestAction = createAction(LOG_OUT_REQUEST);
 
 const reducer = handleActions(
     {
+        //팔로우
+        [FOLLOW_REQUEST]: (state, action) =>
+            produce(state, (draft) => {
+                draft.followLoading = true;
+                draft.followError = null;
+                draft.followDone = false;
+            }),
+        [FOLLOW_SUCCESS]: (state, action) =>
+            produce(state, (draft) => {
+
+                draft.followLoading = false;
+                draft.followDone = true;
+                draft.me.Followings.push({ id: action.data })
+            }),
+        [FOLLOW_FAILURE]: (state, action) =>
+            produce(state, (draft) => {
+                draft.followLoading = false;
+                draft.followDone = false;
+                draft.followError = action.error;
+            }),
+
+        //언팔로우
+        [UNFOLLOW_REQUEST]: (state, action) =>
+            produce(state, (draft) => {
+                draft.unfollowLoading = true;
+                draft.unfollowError = null;
+                draft.unfollowDone = false;
+                // me: null // 데이터도 안보여줄라고 할떄
+            }),
+        [UNFOLLOW_SUCCESS]: (state, action) =>
+            produce(state, (draft) => {
+                draft.unfollowLoading = false;
+                draft.unfollowDone = true;
+                draft.me = dummyUser(action.data);
+            }),
+        [UNFOLLOW_FAILURE]: (state, action) =>
+            produce(state, (draft) => {
+                draft.unfollowLoading = false;
+                draft.unfollowDone = false;
+                draft.unfollowError = action.error;
+            }),
+
         //로그인
         [LOG_IN_REQUEST]: (state, action) =>
             produce(state, (draft) => {
