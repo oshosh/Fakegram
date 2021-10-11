@@ -71,11 +71,10 @@ const SingoMenuContainer = styled.div`
 
 
 
-function PostCardMoreModal({ singoState, onClose, setSingoState }) {
+function PostCardMoreModal({ post, isFollowing, singoState, onClose, setSingoState }) {
 
     // 내가 로그인하면 삭제/수정 그게 아니라면 신고
     const me = useSelector((state) => state.user.me)
-
     const menuItem = (
         <>
             {
@@ -101,14 +100,27 @@ function PostCardMoreModal({ singoState, onClose, setSingoState }) {
                             />
                         </Menu.Item>
                         <Menu.Divider />
-                        <Menu.Item
-                            id="followingMenu"
-                        >
-                            <CancleButton
-                                onClose={onClose('팔로우')}
-                                textContent={"팔로우"}
-                            />
-                        </Menu.Item>
+
+                        {isFollowing ?
+                            <Menu.Item
+                                id="unfollowingMenu"
+                                danger
+                            >
+                                <CancleButton
+                                    onClose={onClose('언팔로우')}
+                                    textContent={"언팔로우"}
+                                />
+                            </Menu.Item>
+                            : <Menu.Item
+                                id="followingMenu"
+                            >
+                                <CancleButton
+                                    onClose={onClose('팔로우')}
+                                    textContent={"팔로우"}
+                                />
+                            </Menu.Item>
+                        }
+
                     </>
                     :
                     (

@@ -35,17 +35,19 @@ function PostCardHeader({ post }) {
           console.log(text);
           break;
         case '팔로우':
+        case '언팔로우':
           if (isFollowing) {
             dispatch({
               type: UNFOLLOW_REQUEST,
               id: post.User.id,
-            });
+            })
           } else {
             dispatch({
               type: FOLLOW_REQUEST,
               id: post.User.id,
             });
           }
+          setModalVisible(false);
           break;
         case '수정':
           console.log(text);
@@ -99,6 +101,7 @@ function PostCardHeader({ post }) {
           >
             <PostCardMoreModal
               post={post}
+              isFollowing={isFollowing}
               onClose={closeModal}
               singoState={singoState}
               setSingoState={setSingoState}

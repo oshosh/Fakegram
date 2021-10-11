@@ -123,13 +123,12 @@ const reducer = handleActions(
                 draft.unfollowLoading = true;
                 draft.unfollowError = null;
                 draft.unfollowDone = false;
-                // me: null // 데이터도 안보여줄라고 할떄
             }),
         [UNFOLLOW_SUCCESS]: (state, action) =>
             produce(state, (draft) => {
                 draft.unfollowLoading = false;
                 draft.unfollowDone = true;
-                draft.me = dummyUser(action.data);
+                draft.me.Followings = draft.me.Followings.filter((v) => v.id !== action.data)
             }),
         [UNFOLLOW_FAILURE]: (state, action) =>
             produce(state, (draft) => {
