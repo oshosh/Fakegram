@@ -22,6 +22,7 @@ import HeartContentList from './header/HeartContentList'
 
 import { useSelector } from 'react-redux'
 import CustomAvatar from './common/CustomAvatar';
+import Counter from './Counter';
 
 const HeaderWrapper = styled.div`
     max-width: 1100px;
@@ -96,6 +97,7 @@ const HeartContent = styled.div`
     z-index: 5;
 `
 
+
 function AppLayout({ children }) {
 
     const me = useSelector((state) => state.user.me)
@@ -104,6 +106,7 @@ function AppLayout({ children }) {
 
     const [heartActive, setHeartActive] = useState(true)
     const [modalVisible, setModalVisible] = useState(false)
+
 
     const router = useRouter()
 
@@ -118,6 +121,8 @@ function AppLayout({ children }) {
         setHeartActive((prevState) => !prevState)
         openModal()
     }, [openModal])
+
+
 
     return (
         <>
@@ -206,7 +211,8 @@ function AppLayout({ children }) {
                         {children}
                     </Col>
                     <Col xxl={6} xl={6} lg={6} xs={24} md={24}>
-                        오른쪽
+                        {/* next.js에서 localstorge 사용 할때 예제 */}
+                        <Counter />
                     </Col>
                 </Row>
             </ThemeProvider>
